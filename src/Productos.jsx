@@ -36,6 +36,7 @@ function Productos() {
   const [mensajeOk, setMensajeOk] = useState("");
   const [mensajeError, setMensajeError] = useState("");
   const [cargando, setCargando] = useState(false);
+  const [buscandoTabla, setBuscandoTabla] = useState(false);
 
   // Eliminar
   const [productoAEliminar, setProductoAEliminar] = useState(null);
@@ -84,8 +85,10 @@ function Productos() {
 
     if (busquedaTablaTimer.current) clearTimeout(busquedaTablaTimer.current);
 
-    busquedaTablaTimer.current = setTimeout(() => {
-      cargarProductos(1, busquedaTabla);
+    setBuscandoTabla(true);
+    busquedaTablaTimer.current = setTimeout(async () => {
+      await cargarProductos(1, busquedaTabla);
+      setBuscandoTabla(false);
     }, 250);
 
     return () => {
@@ -341,13 +344,29 @@ function Productos() {
           </div>
         </div>
 
-        <input
-          type="text"
-          className="form-control mb-4"
-          placeholder="Buscar producto por nombre o ID..."
-          value={busquedaTabla}
-          onChange={(e) => setBusquedaTabla(e.target.value)}
-        />
+        <div className="position-relative mb-4">
+          <input
+            type="text"
+            className="form-control pe-5"
+            placeholder="Buscar producto por nombre o ID..."
+            value={busquedaTabla}
+            onChange={(e) => setBusquedaTabla(e.target.value)}
+          />
+
+          {buscandoTabla && (
+            <div
+              className="position-absolute top-50 end-0 translate-middle-y me-3 d-flex align-items-center text-muted"
+              aria-label="Buscando productos"
+            >
+              <div
+                className="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+                style={{ width: "1rem", height: "1rem" }}
+              />
+            </div>
+          )}
+        </div>
 
         <div className="row">
           {productosFiltrados.length > 0 ? (
