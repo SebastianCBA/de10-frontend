@@ -45,6 +45,7 @@ function Productos() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const observer = useRef();
+  const busquedaTablaTimer = useRef(null);
 
   // Búsqueda en modal
   const [scannerActivo, setScannerActivo] = useState(false);
@@ -53,11 +54,15 @@ function Productos() {
   const lastQueryId = useRef(0);
 
   // === Cargar productos ===
-  const cargarProductos = async (pagina = 1) => {
+  const cargarProductos = async (pagina = 1, query = "") => {
     setCargando(true);
     try {
+      const params = new URLSearchParams({ page: String(pagina) });
+      const q = query.trim();
+      if (q) params.set("q", q);
+
       const res = await axios.get(
-        `${config.apiBaseUrl}/my-products?page=${pagina}`,
+        `${config.apiBaseUrl}/my-products?${params.toString()}`,
         { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
       );
       if (pagina === 1) {
@@ -74,8 +79,23 @@ function Productos() {
     }
   };
 
-  useEffect(() => { cargarProductos(1); }, []);
-  useEffect(() => { if (page > 1) cargarProductos(page); }, [page]);
+  useEffect(() => {
+    setPage(1);
+
+    if (busquedaTablaTimer.current) clearTimeout(busquedaTablaTimer.current);
+
+    busquedaTablaTimer.current = setTimeout(() => {
+      cargarProductos(1, busquedaTabla);
+    }, 250);
+
+    return () => {
+      if (busquedaTablaTimer.current) clearTimeout(busquedaTablaTimer.current);
+    };
+  }, [busquedaTabla]);
+
+  useEffect(() => {
+    if (page > 1) cargarProductos(page, busquedaTabla);
+  }, [page]);
 
   // Infinite scroll
   const lastProductRef = useCallback(
@@ -92,17 +112,8 @@ function Productos() {
     [cargando, hasMore]
   );
 
-  // Filtro tabla
-  const productosFiltrados = productos.filter((p) => {
-    const q = busquedaTabla.toLowerCase().trim();
-    if (!q) return true;
-
-    const nombre = p.product?.name?.toLowerCase() || "";
-    const productId = String(p.product?.id || "");
-    const pantryProductId = String(p.id || "");
-
-    return nombre.includes(q) || productId.includes(q) || pantryProductId.includes(q);
-  });
+  // La búsqueda principal del dashboard ahora se resuelve contra backend.
+  const productosFiltrados = productos;
 
   // Abrir modal “buscar/agregar por código”
   const abrirModal = () => {
