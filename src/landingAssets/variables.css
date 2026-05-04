@@ -1,0 +1,132 @@
+:root {
+  --color-primario: #ff4a26; /* naranja del logo */
+  --color-secundario: #512d8a; /* violeta del logo */
+  --color-acento: #009ca9; /* turquesa */
+  --color-fondo: #f8f9fa;
+  --color-texto: #212529;
+}
+
+/* Fondo gris detrás del sidebar móvil */
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1); /* gris translúcido */
+  z-index: 1039;
+  display: none;
+}
+
+.sidebar-backdrop.active {
+  display: block;
+}
+
+/* Sidebar móvil */
+.sidebar-custom {
+  background-color: white;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-hidden {
+  transform: translateX(-100%);
+}
+
+.sidebar-visible {
+  transform: translateX(0);
+}
+
+/* Enlaces del menú */
+.sidebar-custom .nav-link {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  border-bottom: 1px solid #eee;
+  transition: background 0.2s ease, color 0.2s ease;
+  font-weight: 500;
+}
+
+.sidebar-custom .nav-link:hover {
+  background-color: #f3f3f3;
+  color: var(--color-primario);
+}
+
+/* Íconos en menú */
+.sidebar-custom .nav-link svg {
+  margin-right: 0.5rem;
+  font-size: 1.2rem;
+}
+
+/* Logo mobile */
+.sidebar-custom .logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.sidebar-custom .logo img {
+  height: 40px;
+  margin-right: 0.5rem;
+}
+
+/* Colores utilitarios */
+.text-primario {
+  color: var(--color-primario) !important;
+}
+
+.text-secundario {
+  color: var(--color-secundario) !important;
+}
+
+.text-secundario:hover {
+  color: var(--color-primario) !important;
+}
+
+.text-acento {
+  color: var(--color-acento) !important;
+}
+@media (max-width: 768px) {
+  .product-block {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: white;
+  }
+
+  .product-block img {
+    width: 100%;
+    height: auto;
+    max-height: 180px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+  }
+
+  .product-block .info {
+    margin-bottom: 1rem;
+  }
+
+  .product-block .acciones {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  .table-responsive, table {
+    display: none;
+  }
+}
+.card.h-100 {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

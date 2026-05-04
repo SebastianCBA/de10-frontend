@@ -1,0 +1,251 @@
+:root {
+  --color-primario: #FB791D; /* naranja del logo */
+  --color-secundario: #333c4f; /* violeta del logo */
+  --color-acento: #009ca9; /* turquesa */
+  --color-fondo: #f8f9fa;
+  --color-texto: #212529;
+  --font-base: 'Inter', sans-serif;
+
+}
+body {
+  font-family: var(--font-base);
+}
+
+html.modal-open-custom,
+body.modal-open-custom {
+  overflow: hidden !important;
+  height: 100%;
+  overscroll-behavior: contain;
+}
+
+.modal-lock-scroll {
+  overscroll-behavior: contain;
+  touch-action: none;
+}
+
+.modal-lock-scroll .modal-dialog {
+  max-height: 90vh;
+}
+
+.modal-content-scrollable {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.modal-body-scrollable {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+/* Fondo gris detrás del sidebar móvil */
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1); /* gris translúcido */
+  z-index: 1039;
+  display: none;
+}
+
+.sidebar-backdrop.active {
+  display: block;
+}
+
+/* Sidebar móvil */
+.sidebar-custom {
+  background-color: white;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-hidden {
+  transform: translateX(-100%);
+}
+
+.sidebar-visible {
+  transform: translateX(0);
+}
+
+/* Enlaces del menú */
+.sidebar-custom .nav-link {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  border-bottom: 1px solid #eee;
+  transition: background 0.2s ease, color 0.2s ease;
+  font-weight: 500;
+}
+
+.sidebar-custom .nav-link:hover {
+  background-color: #f3f3f3;
+  color: var(--color-primario);
+}
+
+/* Íconos en menú */
+.sidebar-custom .nav-link svg {
+  margin-right: 0.5rem;
+  font-size: 1.2rem;
+}
+
+/* Logo mobile */
+.sidebar-custom .logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.sidebar-custom .logo img {
+  height: 40px;
+  margin-right: 0.5rem;
+}
+
+/* Colores utilitarios */
+.text-primario {
+  color: var(--color-primario) !important;
+}
+
+.text-secundario {
+  color: var(--color-secundario) !important;
+}
+
+.text-secundario:hover {
+  color: var(--color-primario) !important;
+}
+
+.text-acento {
+  color: var(--color-acento) !important;
+}
+@media (max-width: 768px) {
+  .product-block {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: white;
+  }
+
+  .product-block img {
+    width: 100%;
+    height: auto;
+    max-height: 180px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+  }
+
+  .product-block .info {
+    margin-bottom: 1rem;
+  }
+
+  .product-block .acciones {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  .table-responsive, table {
+    display: none;
+  }
+}
+.card.h-100 {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.contenedor-login {
+  min-height: 100vh; /* altura mínima igual al alto de la ventana */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem; /* padding para separar del borde */
+  background-color: #f8f9fa; /* o el color que estés usando */
+}
+.btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border: 2px solid var(--color-primario);
+  color: var(--color-primario);
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 10px 16px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-google:hover {
+  background-color: var(--color-secundario);
+  color: white;
+}
+.btn-email {
+  background-color: var(--color-primario);
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  transition: 0.3s ease-in-out;
+}
+
+.btn-email:hover {
+  opacity: 0.9;
+}
+
+.registro-formulario {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+  opacity: 0;
+}
+
+.registro-formulario.mostrar {
+  max-height: 1000px;
+  opacity: 1;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+button.active-email {
+  background-color: var(--color-secundario);
+  color: white;
+}
+
+/* ====== Fix: que .btn-primary siempre sea naranja (incluye focus/active) ====== */
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary:disabled,
+.btn-primary:focus-visible,
+.btn-check:focus + .btn-primary,
+.btn-check:checked + .btn-primary,
+.show > .btn-primary.dropdown-toggle {
+  background-color: var(--color-primario) !important;
+  border-color: var(--color-primario) !important;
+  color: #fff !important;
+}
+
+/* Sombra de foco acorde al color de marca (opcional) */
+.btn-primary:focus,
+.btn-primary:focus-visible,
+.btn-check:focus + .btn-primary {
+  box-shadow: 0 0 0 .2rem rgba(251, 121, 29, .25) !important; /* #FB791D */
+}
+
+/* Hover/active un pelín más oscuro (opcional) */
+.btn-primary:hover,
+.btn-primary:active,
+.show > .btn-primary.dropdown-toggle {
+  background-color: #e26e1a !important; /* 10% más oscuro que #FB791D */
+  border-color: #e26e1a !important;
+}

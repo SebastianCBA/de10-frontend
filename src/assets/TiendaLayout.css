@@ -1,0 +1,2446 @@
+:root {
+  --color-naranja: #f04c2f;
+  --color-violeta: #3b1d63;
+  --color-gris-claro: #f8f9fa;
+  --color-borde: #e0e0e0;
+  --color-hover: #fce9e4;
+  --color-verde-beneto: #2e7d32;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: "Poppins", sans-serif;
+  background-color: #fff !important;
+  color: #212529;
+  max-width: 100%;
+  overflow-x: hidden;  
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.tienda-layout {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background: white;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.topbar {
+  background-color: var(--color-gris-claro);
+  font-size: 0.9rem;
+  padding: 0.4rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-borde);
+  flex-wrap: wrap;
+}
+
+.topbar-left,
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.topbar-left .text-primary,
+.topbar-right .text-primary {
+  color: var(--color-violeta);
+}
+
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background-color: #fff;
+}
+
+.tienda-scroll-area {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.footer-masopciones {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #888;
+  border-top: 1px solid #eee;
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.footer-masopciones img {
+  width: 80px;
+  margin-bottom: 0.5rem;
+}
+
+.contenido-scrollable {
+  flex: 1;
+  /*padding: 2rem;*/
+}
+
+.search-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  flex-grow: 1;
+  z-index: 1000;
+}
+
+.search-input-group {
+  max-width: 400px;
+  width: 100%;
+  height: 42px;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.search-input-group input {
+  height: 100%;
+  border: 1px solid #ddd;
+  border-right: 0;
+  padding-left: 10px;
+  font-size: 0.95rem;
+}
+
+.search-input-group input::placeholder {
+  color: #b0b0b0;
+}
+
+.search-input-group .btn {
+  background-color: var(--color-naranja);
+  color: #fff;
+  border: none;
+  padding: 0 12px;
+  transition: background-color 0.3s ease;
+}
+.icono-blanco {
+  color: white !important;
+  fill: white !important;
+  stroke: white !important;
+}
+.btn-outline-primary .icono-blanco {
+  color: white !important;
+  fill: white !important;
+  stroke: white !important;
+}
+.search-input-group .btn:hover {
+  background-color: #d64027;
+  color: #fff;
+}
+
+.btn-outline-primary {
+  border-color: var(--color-naranja);
+  color: var(--color-naranja);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--color-hover);
+  color: var(--color-naranja);
+}
+
+.btn-detalles, .btn-comprar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 16px;
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-detalles {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+.btn-detalles:hover {
+  background-color: #e0e0e0;
+}
+
+.btn-comprar {
+  background-color: #ff6a00;
+  color: white;
+}
+
+.btn-comprar:hover {
+  background-color: #e65c00;
+}
+
+.layout-footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 999;
+  background: white;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  color: #666;
+  box-shadow: -2px -2px 6px rgba(0, 0, 0, 0.05);
+  border-top-left-radius: 8px;
+  max-width: 200px;
+  text-align: right;
+}
+
+.layout-footer img {
+  width: 60px;
+  display: block;
+  margin-left: auto;
+  margin-bottom: 0.3rem;
+}
+
+.footer-fijo {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: #888;
+  background: white;
+  padding: 4px 8px;
+  border-top-left-radius: 8px;
+  box-shadow: -2px -2px 6px rgba(0, 0, 0, 0.05);
+  z-index: 9999;
+}
+.footer-fijo {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: #888;
+  background: white;
+  padding: 4px 8px;
+  border-top-left-radius: 8px;
+  box-shadow: -2px -2px 6px rgba(0, 0, 0, 0.05);
+  z-index: 9999; /* 👈 CLAVE */
+}
+
+.footer-fijo a {
+  pointer-events: auto;
+  position: relative;
+  z-index: 10000;
+}
+.footer-fijo img {
+  height: 20px;
+  margin-right: 4px;
+}
+
+.producto-card {
+  flex: 0 1 calc(33% - 8px);
+  min-width: 250px;
+  max-width: 100%;
+}
+
+.pantalla-cargando {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mensaje-cargando {
+  color: #888;
+  font-size: 1.5rem;
+}
+
+.logo-tienda {
+  height: clamp(48px, 5vw, 64px);
+  max-width: 90%;
+  object-fit: contain;
+}
+.logo-nombre {
+  margin-left: 1rem;
+  text-decoration: none;
+}
+
+.icono-ubicacion,
+.icono-telefono {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-violeta);
+}
+
+.carrito-container {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  position: relative;
+}
+
+.carrito-container .btn {
+  border: none;
+}
+
+a[href="/"] svg.text-primary {
+  color: var(--color-naranja);
+}
+
+.alerta-carrito {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background-color: var(--color-naranja, #ff6600);
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+  animation: aparecerDesaparecer 3s ease-in-out;
+}
+
+.alerta-carrito-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #2e7d32;
+  color: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  font-size: 16px;
+  text-align: center;
+  z-index: 9999;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+  animation: fadeModal 3s ease forwards;
+  max-width: 90%;
+  line-height: 1.5;
+}
+
+.card-producto {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  padding: 0;
+  min-height: 250px;
+  padding: 12px;
+}
+
+.card-producto-img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 14px;
+  background: transparent;   
+}
+
+
+.card-producto-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+
+
+.card-producto-body {
+  padding: 8px 6px 6px;
+  text-align: center;
+}
+
+.producto-nombre {
+  margin: 6px 0 2px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.producto-precio {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: normal;
+  color: #222;
+}
+
+.card-producto-footer {
+  display: flex;
+  gap: 8px;
+  justify-content: center;   /* 👈 clave */
+  padding: 8px 6px 10px;
+}
+.card-producto-footer button {
+  flex: 1;
+  max-width: 140px;
+}
+.modal-check {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 10px;
+}
+
+.checkmark-circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 5;
+  stroke-miterlimit: 10;
+  stroke: white;
+  fill: none;
+  animation: checkmark 0.6s ease-out forwards;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-detalle {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  text-align: center;
+  position: relative;
+  animation: aparecerDesaparecer 0.4s ease;
+}
+
+.modal-img {
+  max-width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+
+.modal-titulo {
+  font-size: 1.1rem;
+  color: var(--color-violeta);
+  margin-top: 5px;
+  margin-bottom: 0.25rem;
+  line-height: 1.2;
+}
+
+.modal-precio {
+  font-size: 1.1rem;
+  color: var(--color-naranja);
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+}
+
+
+.modal-descripcion {
+  font-size: 0.8rem;
+  color: #555;
+  text-align: justify;
+}
+
+.modal-cerrar {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.modal-cerrar:hover {
+  color: #000;
+}
+.modal-overlay {
+  overflow: hidden;
+}
+
+.modal-detalle {
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.search-wrapper {
+  max-width: 520px;
+  width: 100%;
+}
+
+.sugerencias-lista {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  background-color: #fff;
+  width: 100%;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 0 0 8px 8px;
+  margin-top: 2px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 0;
+  list-style: none;
+}
+
+.sugerencia-item {
+  display: flex;
+  align-items: center;
+  padding: 6px 10px;
+  gap: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #f1f1f1;
+  transition: background-color 0.2s ease;
+}
+
+.sugerencia-item:hover {
+  background-color: #f8f8f8;
+}
+
+.sugerencia-item img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.sugerencia-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.sugerencia-info .precio {
+  font-weight: normal;
+  color: #28a745;
+  font-size: 13px;
+}
+
+.logo-nombre-wrapper {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 1rem;
+  gap: 1rem;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.burger-icon {
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.logo-img {
+  display: block;
+  height: 48px;
+  object-fit: contain;
+}
+
+/* ===== HEADER MOBILE ===== */
+@media (max-width: 767px) {
+  .layout-header {
+    background: white;
+    border-bottom: 1px solid #ddd;
+    z-index: 1000;
+  }
+
+  .layout-header .btn {
+    padding: 6px 10px;
+  }
+
+  .layout-header input.form-control {
+    height: 38px;
+    font-size: 15px;
+  }
+
+  .layout-header .form-control:focus {
+    box-shadow: none;
+    border-color: #aaa;
+  }
+
+  .layout-header .btn-outline-secondary,
+  .layout-header .btn-outline-primary {
+    border-radius: 6px;
+  }
+
+  .layout-header .btn-outline-primary {
+    padding: 5px 8px;
+  }
+}
+
+/* ===== HEADER DESKTOP ===== */
+@media (min-width: 768px) {
+  .logo-tienda {
+    height: clamp(52px, 4vw, 64px);
+    max-width: 240px;
+    max-height: none;
+    object-fit: contain;
+  }
+
+  .layout-header .form-control {
+    font-size: 16px;
+  }
+
+  .layout-header .input-group {
+    width: 100%;
+  }
+
+  .layout-header .btn-outline-primary {
+    padding: 5px 10px;
+  }
+}
+.sugerencias-lista {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  z-index: 999;
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 2px;
+  border-radius: 6px;
+  padding: 0;
+  list-style: none;
+}
+
+.sugerencia-item {
+  display: flex;
+  align-items: center;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.sugerencia-item:hover {
+  background-color: #f2f2f2;
+}
+
+.sugerencia-item img {
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
+  margin-right: 10px;
+  border-radius: 4px;
+}
+
+.sugerencia-info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.sugerencia-info .precio {
+  color: #444;
+  font-size: 0.9em;
+}
+
+.carrito-sidebar {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 300px;
+  height: 100vh;
+  background: #fff;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.15);
+  z-index: 1050;
+  transition: right 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.carrito-sidebar.abierto {
+  right: 0;
+}
+
+.carrito-header,
+.carrito-footer {
+  background-color: #f8f9fa;
+}
+
+.carrito-body {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.carrito-sidebar {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 380px;
+  height: 100vh;
+  background: #fff;
+  z-index: 1050;
+  transition: right 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.15);
+}
+
+.carrito-sidebar.abierto {
+  right: 0;
+}
+
+.carrito-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.3);
+  z-index: 1040;
+}
+/* === PANEL LATERAL DE CATEGORÍAS (mobile, cerrado por defecto) === */
+/* === PANEL LATERAL DE CATEGORÍAS (mobile) === */
+/* === PANEL LATERAL DE CATEGORÍAS (mobile) === */
+.sidebar-categorias {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%; /* o 80% si querés un poco más chico */
+  max-width: 400px;
+  height: 100%;
+  background: #fff;
+  z-index: 1050;
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(-100%);
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-categorias.abierto {
+  transform: translateX(0);
+}
+
+.sidebar-categorias .btn-cerrar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1100;
+  background: none;
+  border: none;
+  font-size: 24px;
+}
+
+/* Overlay */
+.categorias-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1040;
+}
+
+
+/* Desktop: mostrar estático */
+@media (min-width: 768px) {
+  .categorias-overlay {
+    display: none;
+  }
+}
+
+
+.offcanvas-categorias {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  height: 100%;
+  width: 100%;
+  max-width: 380px;
+  background-color: #fff;
+  z-index: 1055;
+  transition: left 0.3s ease-in-out;
+  border-right: 1px solid #dee2e6;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.offcanvas-categorias.show {
+  left: 0;
+}
+
+.offcanvas-categorias .offcanvas-header {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-bottom: 1px solid #dee2e6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.offcanvas-categorias .offcanvas-header h5 {
+  margin: 0;
+}
+
+.offcanvas-categorias .btn-close {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  opacity: 0.6;
+}
+
+.offcanvas-categorias .btn-close:hover {
+  opacity: 1;
+}
+
+.offcanvas-categorias .contenido-categorias {
+  padding: 1rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.sidebar-categorias .btn-close-mobile {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1060;
+}
+
+
+@media (min-width: 768px) {
+  .offcanvas-categorias.visible-desktop {
+    position: static !important;
+    left: 0 !important;
+    height: auto;
+    max-width: 280px;
+    box-shadow: none;
+    border-right: none;
+    display: block;
+  }
+}
+.hover-link {
+  text-decoration: none;
+  color: var(--color-secundario); /* o tu color base */
+}
+
+.hover-link:hover {
+  color: var(--color-naranja); /* o el color que uses para hover */
+}
+
+.text-primary {
+  color: var(--color-naranja) !important;
+}
+.pantalla-error {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.pantalla-cargando {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.sidebar-categorias a.text-secondary:hover,
+.contenido-categorias a.text-secondary:hover {
+  background-color: var(--color-naranja);
+  color: white !important;
+  border-radius: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+.hover-subcategoria {
+  color: var(--color-secundario);
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.hover-subcategoria:hover {
+  background-color: var(--color-primario);
+  color: white;
+  text-decoration: none;
+}
+.hover-link {
+  transition: color 0.2s ease, background-color 0.2s ease;
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+
+.hover-link:hover {
+  background-color: #f1f1f1;
+  color: var(--color-primario); /* usá tu naranja o el color que quieras */
+}
+
+.hover-link h5 {
+  transition: color 0.2s ease;
+  margin-bottom: 0;
+  font-size: 1rem;
+}
+
+.hover-link:hover h5 {
+  color: var(--color-primario);
+}
+.inline-loading { 
+  /* queda debajo del input, sin ocupar la pantalla */
+}
+
+.pantalla-cargando {
+  /* lo que ya tengas, se mantiene para el modo full */
+}
+.scanner-wrap {
+  position: relative;
+}
+
+.scanner-actions {
+  position: sticky;   /* se pega en el contenedor del modal */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-top: 12px;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+}
+
+.scanner-actions .btn {
+  max-width: 320px;
+  border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  * {
+    overscroll-behavior-x: none;
+  }  
+  .producto-busqueda {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+
+  .producto-busqueda .boton-seleccionar {
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .producto-busqueda .boton-seleccionar button {
+    width: 100%;
+  }
+}
+/* Contenedor del video: bajo y ancho (3:1) */
+/* Contenedor del video: alto fijo (no depende del stream) */
+.scanner-box{
+  position: relative;
+  width: 100%;
+  height: clamp(110px, 28vw, 160px); /* bajito en mobile, estable */
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+}
+
+/* El video ocupa todo el contenedor sin poder alterar su altura */
+.scanner-video{
+  position: absolute;
+  inset: 0;            /* top:0 right:0 bottom:0 left:0 */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Línea guía horizontal al centro */
+.scanner-guide-line{
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 50%;
+  height: 2px;
+  background: rgba(255,0,0,.9);
+  transform: translateY(-50%);
+}
+.whatsapp-fixed {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  background: #fff; /* para que no se vea sobre contenido */
+  z-index: 1050; /* arriba del contenido */
+}
+
+@media (min-width: 768px) {
+  .whatsapp-fixed {
+    position: static; /* en desktop vuelve a flujo normal */
+    padding: 0;
+    background: transparent;
+  }
+}
+/* opcional */
+.badge.bg-secondary-subtle {
+  background-color: #eef1f3 !important;
+}
+/* ---------- Chips (pills) limpios ---------- */
+.chip {
+  --chip-bg: #f8fafc;       /* fondo claro */
+  --chip-bd: #e2e8f0;       /* borde sutil */
+  --chip-txt: #0f172a;      /* texto */
+  --chip-hover: #eef2f7;    /* hover */
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .45rem .8rem;          /* más grande que antes */
+  border: 1px solid var(--chip-bd);
+  border-radius: 9999px;          /* pill */
+  background: var(--chip-bg);
+  color: var(--chip-txt);
+  font-weight: 600;
+  font-size: .95rem;              /* un toque más grande */
+  line-height: 1;
+}
+
+.chip .chip-label {
+  display: inline-block;
+}
+
+/* Botón de cerrar, muy sutil */
+.chip .chip-x {
+  all: unset;
+  cursor: pointer;
+  width: 20px;                    /* tap target aceptable */
+  height: 20px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #64748b;                 /* gris sutil */
+  transition: background .15s, color .15s, transform .05s;
+}
+.chip .chip-x:hover {
+  background: rgba(100,116,139,.12);
+  color: #475569;
+}
+.chip .chip-x:active {
+  transform: scale(.96);
+}
+/* Accesibilidad: foco visible */
+.chip .chip-x:focus-visible {
+  outline: 2px solid var(--bs-primary, #0d6efd);
+  outline-offset: 2px;
+}
+
+/* Hover del chip completo (opcional) */
+.chip:hover {
+  background: var(--chip-hover);
+}
+
+/* Variante “propia”/“global” si querés diferenciar */
+.chip--own   { border-color:#c7f0d2; background:#f1fff5; }
+.chip--global{ border-color:#e2e8f0; background:#f8fafc; }
+.autosuggest-panel {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          z-index: 1060;
+          background: #fff;
+          border: 1px solid rgba(0,0,0,.125);
+          border-top: none;
+          max-height: 220px;
+          overflow-y: auto;
+          box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+        }
+        .autosuggest-row {
+          padding: .5rem .75rem;
+          cursor: pointer;
+        }
+        .autosuggest-row:hover {
+          background: #f8f9fa;
+        }
+        .autosuggest-state {
+          padding: .5rem .75rem;
+        }
+/* Tarjeta/thumbnail */
+.thumb-card { width: 120px; }
+.thumb-inner {
+  position: relative;
+  border-radius: .75rem;
+  overflow: hidden;
+  border: 1px solid #e5e7eb; /* gray-200 */
+  cursor: pointer;
+  background: #fff;
+}
+.thumb-inner:focus { outline: 2px solid rgba(25,135,84,.4); outline-offset: 2px; } /* verde bs-success */
+
+.thumb-img-wrap { background: #f5f5f5; }
+.thumb-img { object-fit: contain; width: 100%; height: 100%; }
+
+/* Radio/check arriba a la izquierda */
+.thumb-radio {
+  position: absolute; top: 6px; left: 6px;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: rgba(255,255,255,.75);
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 2px rgba(0,0,0,.25);
+  transition: box-shadow .15s, background .15s;
+}
+.thumb-inner:hover .thumb-radio { box-shadow: 0 0 0 2px rgba(25,135,84,.6); }
+.thumb-radio.active {
+  background: #198754;           /* bs-success */
+  box-shadow: 0 0 0 2px #198754;
+}
+
+/* Etiqueta “Principal” abajo a la izquierda */
+.thumb-badge {
+  position: absolute; bottom: 6px; left: 6px;
+  font-size: .75rem; line-height: 1;
+  background: #198754; color: #fff;
+  padding: .15rem .45rem; border-radius: .5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,.15);
+}
+        .chip { display:inline-flex; align-items:center; gap:.5rem; background:#eef2f7; border:1px solid #d7dde8; color:#334155; padding:.35rem .6rem; border-radius:999px; font-weight:500; }
+        .chip--own { background:#e8f5e9; border-color:#c8e6c9; }
+        .chip--global { background:#eef2f7; border-color:#d7dde8; }
+        .chip-label { line-height:1; }
+        .chip-x { border:0; background:transparent; font-size:1rem; line-height:1; width:1.25rem; height:1.25rem; border-radius:50%; color:#64748b; cursor:pointer; }
+        .chip-x:hover { background:rgba(0,0,0,.06); color:#0f172a; }
+
+        .autosuggest-panel { position:absolute; top:100%; left:0; right:0; z-index:30; background:#fff; border:1px solid #dee2e6; border-radius:.5rem; box-shadow:0 4px 16px rgba(0,0,0,.08); margin-top:.25rem; max-height:220px; overflow:auto; }
+        .autosuggest-row { padding:.5rem .75rem; cursor:pointer; }
+        .autosuggest-row:hover { background:#f8f9fa; }
+        .autosuggest-state { padding:.6rem .75rem; }
+
+        .thumb-card { width:130px; }
+        .thumb-inner { position:relative; border:2px solid transparent; border-radius:.75rem; overflow:hidden; background:#f8fafc; }
+        .thumb-inner:hover { border-color:#cbd5e1; }
+        .thumb-primary { border-color:#22c55e !important; }
+        .thumb-img-wrap { background:#f2f4f7; }
+        .thumb-img { width:100%; height:100%; object-fit:contain; }
+        .thumb-radio { position:absolute; top:.5rem; left:.5rem; width:18px; height:18px; border-radius:50%; border:2px solid #64748b; background:#fff; box-shadow:0 0 0 2px #fff inset; }
+        .thumb-radio.active { border-color:#22c55e; background:#22c55e; }
+        .thumb-badge { position:absolute; left:.5rem; bottom:.5rem; background:#22c55e; color:#fff; padding:.15rem .45rem; font-size:.75rem; border-radius:.5rem; }
+
+/* Contenedor de imagen con relación y recorte */
+.modal-img-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 540px;    /* ajustá a tu layout */
+  margin: 0 auto 1rem;
+  aspect-ratio: 1 / 1; /* cuadrado; o 4/3 si preferís */
+  overflow: hidden;
+  border-radius: 12px;
+  background: #fafafa;
+}
+
+/* Capas (todas en posición absoluta para poder hacer cross-fade) */
+.modal-img-wrap .slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;            /* que no deforme */
+  opacity: 0;
+  transform: scale(1.02);         /* leve zoom-out al entrar */
+  transition: opacity 300ms ease, transform 300ms cubic-bezier(.22,.61,.36,1);
+  will-change: opacity, transform;
+  pointer-events: none;           /* que no bloqueen gestos/clicks */
+}
+
+.modal-img-wrap .slide.active {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+/* Flechas */
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  border: none;
+  background: rgba(0,0,0,.45);
+  color: #fff;
+  font-size: 24px;
+  line-height: 36px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 200ms ease, transform 150ms ease;
+}
+.carousel-arrow:hover { background: rgba(0,0,0,.6); }
+.carousel-arrow:disabled { opacity: .5; cursor: default; }
+.carousel-arrow--left  { left: 8px; }
+.carousel-arrow--right { right: 8px; }
+
+/* Dots */
+.carousel-dots {
+  position: absolute;
+  bottom: 8px;
+  left: 0; right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+.carousel-dots .dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0,0,0,.25);
+  cursor: pointer;
+  transition: transform 150ms ease, background 150ms ease;
+}
+.carousel-dots .dot.active { background: rgba(0,0,0,.6); transform: scale(1.15); }
+
+/* Imagen del modal (si la tenías antes) ya no se usa: .modal-img */
+/* ============ MODAL: overlay sin scroll, tarjeta con bordes + scroll interno ============ */
+
+/* El overlay solo centra, no scrollea */
+.modal-overlay {
+  padding: 16px;            /* respiración en bordes para que no toque el viewport */
+  overflow: hidden;         /* el scroll NO va acá */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* La tarjeta blanca: bordes redondeados y CLIP del contenido */
+.modal-detalle {
+  width: min(100%, 980px);  /* un poco más ancha, ajustá si querés */
+  max-height: 90vh;
+  border-radius: 18px;      /* ⬅️ bordes redondeados visibles */
+  overflow: hidden;         /* ⬅️ recorta carrusel y cualquier cosa interna */
+  padding: 0;               /* el padding pasa al contenedor scrolleable */
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Dentro de la tarjeta, este es el ÚNICO que scrollea */
+.modal-scroll {
+  max-height: calc(100vh - 64px);
+  overflow-y: auto;           /* ⬅️ scroll interno */
+  padding-bottom: 12px;            /* el padding que antes tenía la tarjeta */
+  scrollbar-gutter: stable; /* evita que la barra “coma” el borde derecho */
+}
+
+/* El botón cerrar sigue funcionando arriba a la derecha */
+.modal-cerrar {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  z-index: 1;
+}
+
+/* El carrusel/imagen dentro del modal se recorta con radios propios */
+.modal-scroll .modal-img-wrap,
+.modal-scroll .carousel,
+.modal-scroll .gallery,
+.modal-scroll .media-wrapper {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* (Opcional) Scrollbar un poco más fina en webkit */
+.modal-scroll::-webkit-scrollbar { width: 10px; }
+.modal-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,.15);
+  border-radius: 8px;
+}
+/* --- Demo tienda (Landing) ----------------------------------- */
+.demo-strip{
+  display:flex;
+  gap:16px;
+  overflow-x:auto;
+  padding-bottom:6px;
+  scrollbar-width: thin;           /* Firefox */
+}
+.demo-strip::-webkit-scrollbar{ height:8px }      /* Chrome/Safari */
+.demo-strip::-webkit-scrollbar-thumb{ background:#ddd; border-radius:8px }
+
+/* Tarjeta fija (evita que el contenido “salte” de ancho) */
+.demo-card{
+  flex:0 0 200px;                  /* ancho fijo de cada card */
+  max-width:200px;
+  border:1px solid #eee;
+  border-radius:14px;
+  background:#fff;
+  padding:12px;
+}
+
+/* Imagen con alto fijo para que todas queden parejas */
+.demo-img{
+  height:140px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.demo-img img{
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
+}
+
+/* Título: 2 líneas como máximo, resto con “…” */
+.demo-title{
+  margin-top:8px;
+  font-size:.95rem;
+  line-height:1.25;
+  white-space: normal !important;  /* por si algún global pone nowrap */
+  word-break: break-word;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  min-height: calc(1.25em * 2);    /* reserva el alto de 2 líneas */
+}
+
+.demo-price{
+  margin-top:6px;
+  font-weight:700;
+}
+
+/* Responsive: cards un poco más angostas e imagen más baja */
+@media (max-width: 576px){
+  .demo-card{ flex:0 0 160px; max-width:160px; }
+  .demo-img{ height:120px; }
+}
+/* Quita el fondo gris en la caja de imagen y mejora el render */
+/* Caja cuadrada, centrada, sin recortes */
+.example-imgbox {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,.06);
+  background: #fff;              /* o transparent, a gusto */
+  display: flex;                  /* centrado real del contenido */
+  align-items: center;
+  justify-content: center;
+  padding: 8px;                   /* “aire” alrededor de la foto */
+  overflow: hidden;               /* para el borde redondeado */
+}
+
+.example-imgbox img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;                    /* ← ¡clave! no estirar a 100% */
+  height: auto;                   /* ← ¡clave! no forzar alto */
+  object-fit: contain;            /* entra completo sin recortar */
+  object-position: center;
+  display: block;
+  background: transparent;
+}
+/* === FIX definitivo: que NO se corten === */
+.example-card .example-imgbox {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,.06);
+  background: #fff;
+  overflow: hidden;
+}
+
+.example-card .example-imgbox > img {
+  position: static !important;   /* ← pisa el absolute viejo */
+  inset: auto !important;        /* ← borra top/right/bottom/left */
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;/* ← entra completa, sin recorte */
+  object-position: center !important;
+  display: block;
+  background: transparent;
+}
+
+
+/* Logo del header (reemplaza el ícono) */
+.shop-logo {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;                      /* si preferís circular: 50% */
+  object-fit: contain;
+  background: transparent;
+  border: 1px solid rgba(0,0,0,.06);
+}
+
+/* Carril horizontal (por si necesitás suavizar scroll) */
+.example-strip {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(140px, 1fr);
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scroll-snap-type: x proximity;
+}
+.example-item { scroll-snap-align: start; }
+.example-item-title {
+  margin-top: 8px;
+  font-size: .9rem;
+  line-height: 1.2;
+  min-height: 2.2em;                        /* 2 líneas aprox */
+}
+.example-item-price {
+  font-weight: 700;
+  margin-top: 4px;
+}
+/* ===== Radios bonitos para selección de teléfono ===== */
+.phone-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.choice-card {
+  border: 1.5px solid #e9ecef;
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  background: #fff;
+  transition: all .15s ease-in-out;
+}
+
+.choice-card:hover {
+  border-color: var(--color-primario);
+}
+
+.choice-card.active {
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 3px rgba(251, 121, 29, .15);
+}
+
+.choice-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--color-secundario);
+  background: #fff;
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.choice-card.active .choice-dot {
+  border-color: var(--color-primario);
+}
+
+.choice-card.active .choice-dot::after {
+  content: "";
+  position: absolute;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-primario);
+}
+
+.choice-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.choice-title {
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.choice-sub {
+  color: #6c757d;
+  font-size: .92rem;
+}
+
+/* Esconde el radio nativo pero mantiene accesibilidad */
+.visually-hidden-radio {
+  position: absolute !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0;
+  height: 0;
+}
+/* ===== Radios estilizados para elegir destino WhatsApp ===== */
+
+.branch-option {
+  display: block;
+  position: relative;
+}
+
+.branch-option .branch-radio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.branch-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1.5px solid #eaeaea;
+  border-radius: 14px;
+  padding: 14px 16px;
+  transition: all .18s ease-in-out;
+  background: #fff;
+}
+
+.branch-card:hover {
+  border-color: rgba(0,0,0,.12);
+  box-shadow: 0 3px 10px rgba(0,0,0,.06);
+}
+
+.branch-bullet {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #c9ced6;
+  display: inline-block;
+  flex: 0 0 18px;
+  position: relative;
+}
+
+.branch-text .title {
+  font-weight: 700;
+  color: var(--color-secundario);
+  line-height: 1.1;
+}
+
+.branch-text .phone {
+  font-size: .95rem;
+  color: #6b7280;
+}
+
+/* Estado seleccionado */
+.branch-option .branch-radio:checked + .branch-card {
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 4px rgba(251,121,29,.12);
+}
+
+.branch-option .branch-radio:checked + .branch-card .branch-bullet {
+  border-color: var(--color-primario);
+}
+
+.branch-option .branch-radio:checked + .branch-card .branch-bullet::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: var(--color-primario);
+}
+/* ===== Modal: body scroll + footer fijo (mobile friendly) ===== */
+@media (max-width: 576px) {
+  /* El dialog ocupa casi todo el alto usable */
+  .modal-dialog {
+    height: calc(100dvh - 1rem);
+    margin: .5rem auto;
+  }
+
+  /* El contenido usa flex para separar header/body/footer */
+  .modal-content {
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+  }
+
+  /* Header y footer fijos en su lugar */
+  .modal-header,
+  .modal-footer {
+    flex: 0 0 auto;
+  }
+
+  /* El cuerpo ocupa el espacio sobrante y scrollea */
+  .modal-body.modal-body-scroll {
+    flex: 1 1 auto;
+    min-height: 0;            /* importantísimo para que flex permita scroll */
+    overflow-y: auto;
+    max-height: none;         /* lo maneja el flex-container */
+  }
+
+  /* Footer pegado abajo, con fondo y sombra sutil */
+  .modal-footer {
+    position: sticky;
+    bottom: 0;
+    background: #fff;
+    box-shadow: 0 -6px 12px rgba(0,0,0,.06);
+    z-index: 1;
+  }
+}
+
+/* En pantallas más grandes, limitamos el alto y permitimos scroll del body también */
+@media (min-width: 577px) {
+  .modal-content {
+    display: flex;
+    flex-direction: column;
+    max-height: 88dvh;
+  }
+  .modal-body.modal-body-scroll {
+    overflow-y: auto;
+  }
+}
+/* ensanchar el toast de "agregado al carrito" */
+.alerta-carrito-modal {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20000;
+  width: clamp(280px, 92vw, 520px);
+  background: #2e7d32;
+  color: #fff;
+  border-radius: 16px;
+  padding: 18px 20px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+  text-align: center;
+  line-height: 1.35;
+  font-weight: 600;
+}
+.alerta-carrito-modal .modal-check { display:block; margin:0 auto 6px; }
+:root{
+  /* alto total reservado para el CTA (ajustable) */
+  --bottom-cta-h: 96px;
+}
+
+/* --- KILL switch por si quedó alguna barra vieja --- */
+.whatsapp-fixed { display: none !important; }
+
+/* Altura reservada para el CTA fijo */
+:root { --cart-cta-h: 84px; }
+
+/* Separador reutilizable al final de las páginas con CTA fijo */
+.bottom-cta-spacer{
+  height: calc(var(--cart-cta-h) + env(safe-area-inset-bottom));
+}
+
+/* Barra fija del carrito (solo visible en /carrito) */
+.cart-cta{
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  padding: 12px 16px;
+  background: transparent;
+  z-index: 1040;
+  display: none;               /* oculta por defecto */
+}
+
+.cart-cta__inner{
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* Se muestra únicamente cuando Carrito montó la clase en el <body> */
+body.page-carrito .cart-cta{
+  display: block;
+}
+:root { --bottom-cta-h: 96px; }
+
+.bottom-cta-spacer {
+  height: calc(var(--bottom-cta-h) + env(safe-area-inset-bottom));
+}
+
+.cart-cta {                       /* oculto por defecto */
+  display: none;
+  position: fixed; left: 0; right: 0; bottom: 0;
+  padding: 12px 16px; z-index: 1040; background: transparent;
+}
+
+.cart-cta__inner { max-width: 640px; margin: 0 auto; }
+
+/* solo en /carrito (el componente agrega/quita esta clase en <body>) */
+body.page-carrito .cart-cta { display: block; }
+/* --- Suavizar scroll en el contenedor que scrollea --- */
+.tienda-scroll-area {
+  scroll-behavior: smooth;
+}
+
+/* --- Transición de entrada del contenido (fade + slide) --- */
+.route-fade {
+  animation: routeFade .20s ease-out both;
+}
+
+@keyframes rfFadeSlide {
+  from { opacity: .02; margin-top: 8px; }
+  to   { opacity: 1;   margin-top: 0; }
+}
+
+/* Accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  .tienda-scroll-area { scroll-behavior: auto; }
+  .route-fade { animation: none; }
+}
+/* === CTA fijo del carrito (mobile & desktop) === */
+.page-carrito .bottom-cta-spacer{
+  /* reserva de espacio para que el contenido no quede tapado por la barra fija */
+  height: 92px;
+}
+@media (min-width: 768px){
+  .page-carrito .bottom-cta-spacer{ height: 80px; }
+}
+
+.page-carrito .cart-cta{
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 1049; /* por encima del header/footer, por debajo del modal de Bootstrap (1055) */
+  background: rgba(255,255,255,0.96);
+  border-top: 1px solid #e9ecef;
+  backdrop-filter: blur(8px) saturate(1.1);
+  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+  padding: 12px 16px;
+  /* Soporte para notch / barras del SO */
+  padding-bottom: max(12px, env(safe-area-inset-bottom), constant(safe-area-inset-bottom));
+}
+.page-carrito .cart-cta__inner{
+  max-width: 720px; /* o el ancho que uses para el container */
+  margin: 0 auto;
+}
+.page-carrito .cart-cta .btn{
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+}
+/* ==== iOS fix: CTA visible en iPhone ==== */
+
+/* El body del carrito NO debe ocultar overflow, si no Safari clippea los fixed */
+body.page-carrito {
+  overflow: visible !important;
+}
+
+/* Reserva de espacio extra para que el contenido no quede tapado */
+.page-carrito .bottom-cta-spacer {
+  height: calc(96px + env(safe-area-inset-bottom));
+}
+
+/* La barra fija: por encima del contenido y fuera de la barra de Safari */
+.page-carrito .cart-cta {
+  display: block !important;                 /* por si alguna regla previa la oculta */
+  position: fixed;
+  left: 0; right: 0;
+  bottom: max(0px, env(safe-area-inset-bottom));
+  z-index: 1054;                              /* debajo del modal (1055), encima de todo lo demás */
+  background: rgba(255,255,255,0.96);
+  border-top: 1px solid #e9ecef;
+  backdrop-filter: blur(8px) saturate(1.1);
+  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+  padding: 12px 16px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom)); /* notch/home bar */
+  transform: translateZ(0);                   /* fuerza su propio layer (bugfix iOS) */
+  will-change: transform;
+}
+/* El body del carrito no debe ocultar overflow, iOS clippea los fixed si no */
+body.page-carrito { overflow: visible !important; }
+
+/* Reserva de espacio para que el contenido no quede tapado por la barra */
+.page-carrito .bottom-cta-spacer {
+  height: calc(92px + env(safe-area-inset-bottom));
+}
+
+/* La barra ahora vive en <body> dentro de .cart-cta-portal */
+.cart-cta-portal .cart-cta{
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 1054; /* debajo del modal custom (1055), arriba de todo lo demás */
+  background: rgba(255,255,255,0.96);
+  border-top: 1px solid #e9ecef;
+  backdrop-filter: blur(8px) saturate(1.1);
+  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+  padding: 12px 16px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+
+.cart-cta-portal .cart-cta__inner{
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.cart-cta-portal .cart-cta .btn{
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+}
+/* ===== Forzar visibilidad CTA en iPhone real ===== */
+
+/* el body del carrito no debe ocultar overflow, si no iOS clippea los fixed */
+body.page-carrito { overflow: visible !important; }
+
+/* reserva de espacio para que el contenido no quede tapado */
+.page-carrito .bottom-cta-spacer{
+  height: calc(96px + env(safe-area-inset-bottom));
+}
+
+/* regla ultra específica para ganarle a cualquier .cart-cta previa */
+#cart-cta {
+  display: block !important;                 /* por si alguna regla la ocultaba */
+  position: fixed;
+  left: 0; right: 0;
+  /* subirla por encima de la barra inferior de Safari (home bar/notch) */
+  bottom: env(safe-area-inset-bottom);
+  /* fallback viejo de iOS (no rompe en los nuevos si queda arriba) */
+  bottom: constant(safe-area-inset-bottom);
+  z-index: 2147483600;                       /* por encima de cualquier overlay */
+  background: rgba(255,255,255,0.96);
+  border-top: 1px solid #e9ecef;
+  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+  backdrop-filter: blur(8px) saturate(1.1);
+  padding: 12px 16px;
+  /* sumar safe-area también adentro para que no quede pegada al borde */
+  padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  transform: translateZ(0);                  /* fuerza layer y repintado en iOS */
+  will-change: transform;
+}
+
+/* ancho máximo centrado, como tenías */
+#cart-cta .cart-cta__inner{
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* por si hay un fixed “pantalla completa” encima que captura eventos */
+#cart-cta * { pointer-events: auto; }
+/* espacio al final para que nada quede tapado */
+.page-carrito .bottom-cta-spacer{
+  height: calc(92px + env(safe-area-inset-bottom));
+}
+
+/* === Fallback iOS: barra sticky (dentro del contenedor que scrollea) === */
+.page-carrito .cart-sticky{
+  position: sticky;
+  bottom: 0;
+  z-index: 1054;
+  background: rgba(255,255,255,0.96);
+  border-top: 1px solid #e9ecef;
+  padding: 12px 16px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+.page-carrito .cart-sticky::before{
+  content:"";
+  position:absolute; left:0; right:0; top:-16px; height:16px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.95));
+  pointer-events:none;
+}
+.page-carrito .cart-cta__inner{
+  max-width: 720px; margin: 0 auto;
+}
+
+/* === Portal (no iOS): fixed en <body> === */
+#cart-cta{
+  position: fixed; left:0; right:0; bottom: env(safe-area-inset-bottom);
+  z-index: 1054;
+  background: rgba(255,255,255,0.96);
+  border-top: 1px solid #e9ecef;
+  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+  backdrop-filter: blur(8px) saturate(1.1);
+  padding: 12px 16px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+
+/* iOS puede clipear fixed si el body oculta overflow */
+body.page-carrito{ overflow: visible !important; }
+/* iOS/inline: botón como bloque normal al final */
+.cart-block {
+  padding: 12px 0;
+}
+
+/* Portal no-iOS: barra fija en el body */
+.page-carrito .bottom-cta-spacer{
+  height: calc(92px + env(safe-area-inset-bottom));
+}
+#cart-cta{
+  position: fixed;
+  left: 0; right: 0;
+  bottom: env(safe-area-inset-bottom);
+  z-index: 1054;
+  background: rgba(255,255,255,0.96);
+  border-top: 1px solid #e9ecef;
+  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+  backdrop-filter: blur(8px) saturate(1.1);
+  padding: 12px 16px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+#cart-cta .cart-cta__inner{ max-width: 720px; margin: 0 auto; }
+
+/* evitar recortes raros */
+body.page-carrito{ overflow: visible !important; }
+/* === iPhone: que el botón no quede cortado por la barra del SO === */
+
+/* iOS/inline: CTA dentro del contenido (cart-block o cart-sticky) */
+.page-carrito .cart-block,
+.page-carrito .cart-sticky{
+  /* si querés que quede fija mientras scrolleás, dejá sticky */
+  position: sticky;
+  bottom: 0;
+  z-index: 1054;
+  background: rgba(255,255,255,0.96);
+  border-top: 1px solid #e9ecef;
+  padding: 12px 16px;
+  /* espacio interno para la home bar / notch */
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+
+/* agrega “más scroll” debajo del último elemento para que el botón
+   nunca quede pegado al borde de la pantalla */
+body.page-carrito::after{
+  content: "";
+  display: block;
+  height: max(20px, env(safe-area-inset-bottom));
+}
+
+/* (opcional) un degradé suave arriba de la barra para separar */
+.page-carrito .cart-sticky::before,
+.page-carrito .cart-block::before{
+  content:"";
+  position:absolute; left:0; right:0; top:-16px; height:16px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.96));
+  pointer-events:none;
+}
+/* CTA sticky (iOS/inline): levantada por encima de la barra del SO */
+.page-carrito .cart-block,
+.page-carrito .cart-sticky{
+  position: sticky;
+  bottom: env(safe-area-inset-bottom);          /* <- clave */
+  z-index: 1054;
+  background: rgba(255,255,255,0.96);
+  border-top: 1px solid #e9ecef;
+  padding: 12px 16px;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom)); /* espacio interno extra */
+}
+
+/* Espaciador dentro del MISMO scroller para que el botón no quede cortado
+   cuando llegás al final de la lista */
+.page-carrito .ios-bottom-spacer{
+  height: calc(28px + env(safe-area-inset-bottom));
+}
+
+/* Si tu página usa un contenedor scroll (p.ej. .tienda-scroll-area), dale padding-bottom también */
+.tienda-scroll-area{
+  padding-bottom: calc(16px + env(safe-area-inset-bottom));
+}
+.page-carrito .cart-block{position:sticky; bottom:env(safe-area-inset-bottom); z-index:1054; background:rgba(255,255,255,.96); border-top:1px solid #e9ecef; padding:12px 16px; padding-bottom:calc(12px + env(safe-area-inset-bottom));}
+.ios-bottom-spacer{height:calc(28px + env(safe-area-inset-bottom));}
+
+
+/* ==========================================================================
+   CART CTA OVERRIDE (FINAL v2) — iOS-safe + robust
+   This block intentionally sits at the very end of the file and wins specificity.
+   ========================================================================== */
+
+:root { 
+  --cart-cta-height: 104px;         /* spacer for fixed bar */
+  --ios-toolbar-fallback: 56px;     /* visible Safari bottom toolbar height */
+}
+
+body.page-carrito { overflow: visible !important; }
+
+/* Spacer so content never sits under the fixed CTA (portal case) */
+.page-carrito .bottom-cta-spacer{
+  height: calc(var(--cart-cta-height) + env(safe-area-inset-bottom));
+}
+
+/* ------------------ Portal (no-iOS / no-inline) ------------------ */
+#cart-cta{
+  position: fixed;
+  left: 0; right: 0;
+  /* lift above bottom UI a bit even when env() is 0 */
+  bottom: calc(env(safe-area-inset-bottom) + 12px);
+  z-index: 20010; /* well above overlays; below Bootstrap modal (1055) was too low in some themes */
+  background: rgba(255,255,255,0.96);
+  border-top: 1px solid #e9ecef;
+  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+  backdrop-filter: blur(8px) saturate(1.1);
+  padding: 12px 16px;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  transform: translateZ(0);
+  will-change: transform;
+}
+#cart-cta .cart-cta__inner{ max-width: 720px; margin: 0 auto; }
+
+/* ------------------ iOS / inline (sticky inside scroller) ------------------ */
+.page-carrito .cart-block,
+.page-carrito .cart-sticky{
+  position: sticky;
+  /* Sit above Safari bottom toolbar even when env() returns 0 */
+  bottom: var(--ios-toolbar-fallback);
+  z-index: 20010;
+  background: rgba(255,255,255,0.96);
+  border-top: 1px solid #e9ecef;
+  padding: 12px 16px;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  border-radius: 12px 12px 0 0;
+}
+
+/* A soft fade above the sticky bar */
+.page-carrito .cart-sticky::before,
+.page-carrito .cart-block::before{
+  content:"";
+  position:absolute; left:0; right:0; top:-16px; height:16px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.96));
+  pointer-events:none;
+}
+
+/* Extra scroll room so the last item never collides with the sticky bar */
+.page-carrito .ios-bottom-spacer{
+  height: calc(88px + env(safe-area-inset-bottom));
+}
+
+/* The actual scroller container also needs bottom padding */
+.tienda-scroll-area{
+  padding-bottom: calc(88px + env(safe-area-inset-bottom));
+}
+
+/* Espaciadores (mismo scroller) */
+.page-carrito .bottom-cta-spacer{ height: calc(var(--cart-cta-height) + env(safe-area-inset-bottom) + var(--ios-ui)); }
+.page-carrito .ios-bottom-spacer{ height: calc(88px + env(safe-area-inset-bottom) + var(--ios-ui)); }
+.tienda-scroll-area{ padding-bottom: calc(88px + env(safe-area-inset-bottom) + var(--ios-ui)); }
+/* ===== KILL PATCH — CTA iOS/Chrome iOS (pegar al final) =================== */
+
+/* 1) Rompe el bloqueo del scroll/cálculo del viewport que tenés por html,body */
+html.page-carrito-root { 
+  overflow: visible !important; 
+  height: auto !important;
+}
+body.page-carrito { 
+  overflow: visible !important; 
+  height: auto !important;
+}
+
+/* 2) La variable la setea JS con VisualViewport (fallback si no existe) */
+:root{ --ios-ui: 0px; }
+
+/* 3) Portal (no-iOS / no-inline): barra fija en <body> */
+html.page-carrito-root body.page-carrito #cart-cta{
+  display: block !important;
+  position: fixed !important;
+  left: 0; right: 0;
+  bottom: calc(env(safe-area-inset-bottom) + var(--ios-ui) + 8px) !important;
+  z-index: 20010 !important;
+  background: rgba(255,255,255,0.96) !important;
+  border-top: 1px solid #e9ecef !important;
+  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+  backdrop-filter: blur(8px) saturate(1.1);
+  padding: 12px 16px !important;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom)) !important;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* 4) iOS/inline: sticky dentro del scroller */
+html.page-carrito-root body.page-carrito .cart-block,
+html.page-carrito-root body.page-carrito .cart-sticky{
+  position: sticky !important;
+  bottom: calc(var(--ios-ui) + 8px) !important;
+  z-index: 20010 !important;
+  background: rgba(255,255,255,0.96) !important;
+  border-top: 1px solid #e9ecef !important;
+  padding: 12px 16px !important;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom)) !important;
+  border-radius: 12px 12px 0 0;
+}
+
+/* 5) Spacers (mismo contenedor que scrollea) */
+html.page-carrito-root body.page-carrito .bottom-cta-spacer{
+  height: calc(104px + env(safe-area-inset-bottom) + var(--ios-ui)) !important;
+}
+html.page-carrito-root body.page-carrito .ios-bottom-spacer{
+  height: calc(88px + env(safe-area-inset-bottom) + var(--ios-ui)) !important;
+}
+html.page-carrito-root body.page-carrito .tienda-scroll-area{
+  padding-bottom: calc(88px + env(safe-area-inset-bottom) + var(--ios-ui)) !important;
+}
+
+/* 6) Chrome en iPhone (UA CriOS): forzá bottom a usar la UI real */
+html.is-crios body.page-carrito #cart-cta,
+html.is-crios body.page-carrito .cart-block,
+html.is-crios body.page-carrito .cart-sticky{
+  bottom: calc(var(--ios-ui) + 8px) !important;
+}
+/* ========== CART CTA — FIX FINAL (Safari + Chrome iOS) ========== */
+:root{
+  --ios-ui: 0px;              /* setea JS */
+  --cart-cta-height: 104px;   /* alto aproximado del bloque CTA */
+}
+
+/* 1) el <html> no debe tener overflow:hidden en la página del carrito */
+html.page-carrito-root { overflow: visible !important; height: auto !important; }
+body.page-carrito       { overflow: visible !important; height: auto !important; }
+
+/* 2) separador: el contenido nunca queda debajo de la barra */
+.page-carrito .bottom-cta-spacer{
+  height: calc(var(--cart-cta-height) + env(safe-area-inset-bottom) + var(--ios-ui)) !important;
+}
+
+/* 3) barra fija en <body> (portal) */
+html.page-carrito-root body.page-carrito #cart-cta{
+  display: block !important;
+  position: fixed !important;
+  left: 0; right: 0;
+  bottom: calc(env(safe-area-inset-bottom) + var(--ios-ui) + 8px) !important;
+  z-index: 20010 !important;
+  background: rgba(255,255,255,0.96) !important;
+  border-top: 1px solid #e9ecef !important;
+  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+  backdrop-filter: blur(8px) saturate(1.1);
+  padding: 12px 16px !important;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom)) !important;
+  transform: translateZ(0);
+}
+
+/* 4) sticky (solo cuando NO hay portal: inline=true) */
+html.page-carrito-root body.page-carrito .cart-block,
+html.page-carrito-root body.page-carrito .cart-sticky{
+  position: sticky !important;
+  bottom: calc(var(--ios-ui) + 8px) !important;
+  z-index: 20010 !important;
+  background: rgba(255,255,255,0.96) !important;
+  border-top: 1px solid #e9ecef !important;
+  padding: 12px 16px !important;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom)) !important;
+  border-radius: 12px 12px 0 0;
+}
+
+/* 5) padding extra en el contenedor que scrollea */
+html.page-carrito-root body.page-carrito .tienda-scroll-area{
+  padding-bottom: calc(88px + env(safe-area-inset-bottom) + var(--ios-ui)) !important;
+}
+
+/* 6) Caso específico Chrome en iPhone (UA CriOS): usar siempre --ios-ui */
+html.is-crios body.page-carrito #cart-cta,
+html.is-crios body.page-carrito .cart-block,
+html.is-crios body.page-carrito .cart-sticky{
+  bottom: calc(var(--ios-ui) + 8px) !important;
+}
+/* ===================================================================
+   FIX DEFINITIVO — Chrome iOS (CriOS) + Carrito
+   Pegar AL FINAL de TiendaLayout.css
+   =================================================================== */
+
+/* 1) El carrito debe poder scrollear en el viewport (no en un div interno) */
+html.page-carrito-root,
+html.page-carrito-root body,
+body.page-carrito {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  height: auto !important;
+  min-height: 100dvh;
+}
+
+/* 2) En Chrome iOS usamos barra STICKY dentro del scroller y la
+      elevamos por encima de la toolbar inferior del navegador.
+      --ios-ui la calcula el componente (≈56px en tu captura). */
+html.page-carrito-root.is-crios .cart-sticky,
+html.page-carrito-root.is-crios .cart-block {
+  position: sticky;
+  bottom: calc(var(--ios-ui, 56px) + 6px); /* respirito extra */
+  z-index: 2147483600;                      /* por encima de UI del SO */
+  background: rgba(255,255,255,0.96);
+  border-top: 1px solid #e9ecef;
+  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+  backdrop-filter: blur(8px) saturate(1.1);
+  padding: 12px 16px;
+  padding-bottom: calc(12px + var(--ios-ui, 56px));
+  border-radius: 12px 12px 0 0;
+}
+
+/* 3) Más “piso” al final del scroll para que nunca quede cortado */
+html.page-carrito-root.is-crios .ios-bottom-spacer {
+  height: calc(100px + var(--ios-ui, 56px));
+}
+
+/* 4) Por si quedó alguna barra fija vieja por portal, la anulamos en CriOS */
+html.page-carrito-root.is-crios #cart-cta {
+  display: none !important;
+}
+@media (max-width: 480px) {
+  html, body {
+    overflow-x: hidden;
+  }
+
+  .tienda-layout,
+  .tienda-scroll-area,
+  .contenido-scrollable {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .sidebar-categorias {
+    width: 100vw;
+    max-width: 100vw;
+  }
+}
+/* Ocultar texto informativo de variante en mobile */
+@media (max-width: 480px) {
+  .modal-content p {
+    font-size: 0.9rem;
+  }
+
+  /* Oculta el texto "La imagen principal proviene de la variante..." */
+  .modal-content p:has(+ .modal-galeria),
+  .modal-content p:has(+ div img) {
+    display: none;
+  }
+}
+/* ===== FIX modal: sin overflow horizontal + acciones responsivas ===== */
+.modal-scroll {
+  overflow-x: hidden;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  margin: 12px 0 16px;
+  flex-wrap: wrap;
+}
+
+/* evita que "Comprar" se vaya fuera en pantallas chicas */
+.modal-actions .btn-detalles,
+.modal-actions .btn-comprar {
+  flex: 1;
+  min-width: 140px;
+  max-width: 100%;
+}
+
+@media (max-width: 420px) {
+  .modal-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .modal-actions .btn-detalles,
+  .modal-actions .btn-comprar {
+    width: 100%;
+    min-width: 0;
+  }
+}
+@media (max-width: 576px) {
+
+  .modal-dialog {
+    margin: 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+  }
+
+  .modal-content {
+    border-radius: 16px 16px 0 0;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+}
+@media (max-width: 576px) {
+
+  .modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 90px; /* espacio para botones */
+  }
+
+}
+@media (max-width: 576px) {
+
+  .modal-footer {
+    display: flex;
+    gap: 10px;
+  }
+
+  .modal-footer .btn {
+    flex: 1;
+    height: 42px;
+    padding: 0;
+    font-size: 0.95rem;
+  }
+
+}
+
+@media (max-width: 576px) {
+
+  .modal-body img {
+    max-height: 240px;
+    object-fit: contain;
+  }
+
+}
+@media (max-width: 576px) {
+
+  .modal-descripcion,
+  .modal-body p {
+    font-size: 0.80rem;
+    line-height: 1.4;
+    padding:5px;
+  }
+
+}
+/* ---------- Bottom sheet modal ---------- */
+@media (max-width: 576px) {
+
+  .modal-detalle {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-height: 90vh;
+    border-radius: 16px 16px 0 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .modal-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 12px;
+  }
+
+  .modal-actions {
+    display: flex;
+    gap: 10px;
+    padding: 12px;
+    border-top: 1px solid #eee;
+    background: #fff;
+  }
+
+  .modal-actions .btn-detalles,
+  .modal-actions .btn-comprar {
+    flex: 1;
+    height: 42px;
+    font-size: 0.95rem;
+  }
+}
+.mobile-header-center {
+  position: relative;
+  width: 100%;
+  height: 48px; /* altura FIJA */
+}
+
+.mobile-logo,
+.mobile-search {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.15s ease;
+}
+
+.mobile-logo.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mobile-search {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mobile-search.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.desktop-header-grid {
+  display: grid;
+  grid-template-columns: minmax(200px, 18%) 1fr auto;
+  align-items: center;
+  column-gap: 16px;
+}
+.logo-col {
+  width: 100%;
+  justify-self: center;
+}
+.desktop-header-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 18%) 1fr auto;
+  align-items: center;
+  column-gap: 16px;
+}
+
+.logo-col {
+  width: 100%;
+  justify-self: center;
+}
+
+.logo-tienda {
+  height: clamp(52px, 4vw, 64px);
+  max-width: 90%;
+  object-fit: contain;
+}
+
+.carousel-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.carousel-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,.6);
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+.carousel-dot.active {
+  width: 8px;
+  height: 8px;
+  background: #fff;
+}

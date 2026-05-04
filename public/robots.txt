@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://de10.app/backend/sitemap.xml
