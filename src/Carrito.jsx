@@ -217,7 +217,7 @@ useEffect(() => {
     carrito.forEach((item) => {
       const varTxt = item?.variante?.nombre ? ` (Variante: ${item.variante.nombre})` : "";
       const idTxt = item?.id ? ` (ID: ${item.id})` : "";
-      mensaje += `🛒 ${item.nombre}${varTxt}${idTxt} x${item.cantidad} - ${formatPrice(
+      mensaje += `• ${item.nombre}${varTxt}${idTxt} x${item.cantidad} - ${formatPrice(
         parseFloat(item.precio) * item.cantidad
       )}\n`;
     });
