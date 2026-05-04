@@ -93,9 +93,16 @@ function Productos() {
   );
 
   // Filtro tabla
-  const productosFiltrados = productos.filter((p) =>
-    p.product?.name?.toLowerCase().includes(busquedaTabla.toLowerCase())
-  );
+  const productosFiltrados = productos.filter((p) => {
+    const q = busquedaTabla.toLowerCase().trim();
+    if (!q) return true;
+
+    const nombre = p.product?.name?.toLowerCase() || "";
+    const productId = String(p.product?.id || "");
+    const pantryProductId = String(p.id || "");
+
+    return nombre.includes(q) || productId.includes(q) || pantryProductId.includes(q);
+  });
 
   // Abrir modal “buscar/agregar por código”
   const abrirModal = () => {
@@ -326,7 +333,7 @@ function Productos() {
         <input
           type="text"
           className="form-control mb-4"
-          placeholder="Buscar producto..."
+          placeholder="Buscar producto por nombre o ID..."
           value={busquedaTabla}
           onChange={(e) => setBusquedaTabla(e.target.value)}
         />
@@ -392,6 +399,11 @@ function Productos() {
 
                   <div className="card-body py-2 px-3">
                     <h6 className="card-title mb-2">{producto.product?.name || "-"}</h6>
+
+                    <p className="mb-1">
+                      <strong>ID: </strong>
+                      {producto.product?.id || "-"}
+                    </p>
 
                     <p className="mb-1">
                       <strong>Precio: </strong>
