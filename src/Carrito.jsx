@@ -221,7 +221,7 @@ useEffect(() => {
         parseFloat(item.precio) * item.cantidad
       )}\n`;
     });
-    mensaje += `\n💰 Total: ${formatPrice(total)}`;
+    mensaje += `\nTotal: ${formatPrice(total)}`;
     return encodeURIComponent(mensaje);
   };
 
