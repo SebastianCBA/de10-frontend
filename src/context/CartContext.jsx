@@ -51,7 +51,11 @@ export function CartProvider({ children }) {
   }, [carrito]);
 
   const agregarAlCarrito = (producto) => {
-    const id = producto?.id;
+    const id =
+      producto?.product?.id ??
+      producto?.product_id ??
+      producto?.producto_id ??
+      producto?.id;
     if (id == null) return;
 
     const varianteId = producto?.variante_id ?? producto?.variante?.id ?? null;
