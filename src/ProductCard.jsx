@@ -10,6 +10,12 @@ const ProductCard = ({ producto }) => {
   const { agregarAlCarrito } = useCart();
   const [mostrarDetalles, setMostrarDetalles] = useState(false);
 
+  const productIdReal =
+    producto?.product?.id ??
+    producto?.product_id ??
+    producto?.producto_id ??
+    producto?.id;
+
   const mostrarMensajeAgregado = () => {
     const alerta = document.createElement("div");
     alerta.className = "alerta-carrito-modal";
@@ -119,13 +125,13 @@ const ProductCard = ({ producto }) => {
   const productoConGaleria = useMemo(
     () => ({
       ...producto,
+      product_id: productIdReal,
       galeria,
       imagenes: galeria,
       imagenes_extras: galeria,
     }),
-    [producto, galeria]
+    [producto, galeria, productIdReal]
   );
-  const productIdReal = producto.product_id || producto.id;
 
   const productSlug = (producto.nombre || "")
     .toLowerCase()
