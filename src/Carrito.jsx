@@ -555,7 +555,11 @@ useEffect(() => {
 
                 <ul className="mb-3">
                   <li>Podrás revisar el mensaje antes de enviarlo.</li>
-                  <li>Al confirmar, <b>vaciaremos tu carrito</b> aquí para evitar pedidos duplicados.</li>
+                  <li>
+                    Una vez que te comuniques con el vendedor por <b>WhatsApp</b>, eliminaremos este pedido de la pantalla
+                    para evitar confusiones o pedidos duplicados.
+                  </li>
+                  <li>Después vas a poder seguir recorriendo la tienda y agregar nuevos productos si querés hacer otro pedido.</li>
                 </ul>
 
                 <div className="d-flex justify-content-between small text-muted">
