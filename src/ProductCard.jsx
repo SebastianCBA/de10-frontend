@@ -139,6 +139,12 @@ const ProductCard = ({ producto }) => {
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
+
+  const productoParaCarrito = {
+    ...producto,
+    id: productIdReal,
+    product_id: productIdReal,
+  };
   return (
     <>
       <div className="producto-card">
@@ -202,7 +208,7 @@ const ProductCard = ({ producto }) => {
                 }
                 // sin variantes: agregamos directo
                 const precio = Number(producto?.precio ?? 0);
-                agregarAlCarrito({ ...producto, precio });
+                agregarAlCarrito({ ...productoParaCarrito, precio });
                 mostrarMensajeAgregado();
               }}
             >
@@ -214,7 +220,7 @@ const ProductCard = ({ producto }) => {
 
       {mostrarDetalles && (
         <ProductDetailsModal
-          producto={productoConGaleria}
+          producto={{ ...productoConGaleria, id: productIdReal, product_id: productIdReal }}
           onClose={() => setMostrarDetalles(false)}
         />
       )}
