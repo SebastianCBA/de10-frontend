@@ -320,6 +320,11 @@ useEffect(() => {
               />
               <div className="flex-grow-1 text-center text-md-start">
                 <div className="fw-bold">{item.nombre}</div>
+                {item?.id ? (
+                  <div className="small text-muted mt-1">
+                    <strong>ID:</strong> {item.id}
+                  </div>
+                ) : null}
 
                 {item?.variante?.nombre && (
                   <div
