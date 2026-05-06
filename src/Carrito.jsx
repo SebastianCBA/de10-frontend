@@ -299,6 +299,10 @@ useEffect(() => {
     const raw = localStorage.getItem(WHATSAPP_ORDER_CLEARED_KEY);
     const parsed = raw ? JSON.parse(raw) : null;
     whatsappOrderCleared = parsed?.store === subdomain;
+
+    if (whatsappOrderCleared) {
+      localStorage.removeItem(WHATSAPP_ORDER_CLEARED_KEY);
+    }
   } catch {}
 
   if (carrito.length === 0) {
