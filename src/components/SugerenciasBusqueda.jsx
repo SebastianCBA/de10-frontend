@@ -15,7 +15,8 @@ function SugerenciasBusqueda({ sugerencias, setMostrarSugerencias }) {
           key={prod.id}
           className="sugerencia-item"
           onClick={() => {
-            navigate(`/buscar?q=${encodeURIComponent(prod.nombre)}`);
+            const target = prod?.product_id ?? prod?.id ?? prod?.nombre;
+            navigate(`/buscar?q=${encodeURIComponent(target)}`);
             setMostrarSugerencias(false);
           }}
         >
