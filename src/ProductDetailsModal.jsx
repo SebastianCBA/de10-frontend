@@ -170,9 +170,17 @@ const ProductDetailsModal = ({ producto, onClose }) => {
   };
 
   const handleComprar = () => {
+    const realProductId =
+      producto?.product?.id ??
+      producto?.product_id ??
+      producto?.producto_id ??
+      producto?.id;
+
     const payload = selVar
       ? {
           ...producto,
+          id: realProductId,
+          product_id: realProductId,
           precio: selVar.precio,
           variante_id: selVar.id,
           variante: {
@@ -182,7 +190,12 @@ const ProductDetailsModal = ({ producto, onClose }) => {
             precio: selVar.precio,
           },
         }
-      : { ...producto, precio: Number(producto?.precio ?? 0) };
+      : {
+          ...producto,
+          id: realProductId,
+          product_id: realProductId,
+          precio: Number(producto?.precio ?? 0),
+        };
 
     agregarAlCarrito(payload);
     mostrarMensajeAgregado();
