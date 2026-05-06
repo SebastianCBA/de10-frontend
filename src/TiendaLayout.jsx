@@ -62,33 +62,17 @@ function TiendaLayout() {
   const [busquedaActiva, setBusquedaActiva] = useState(false);
   const [carritoAbierto, setCarritoAbierto] = useState(false);
   const [categoriasAbierto, setCategoriasAbierto] = useState(false);
-  // Convierte el nombre de la sugerencia en una query "buscable"
+  // Convierte el nombre de la sugerencia en una query buscable sin truncarlo.
+  // Si el usuario hace click en una sugerencia, esperamos buscar por el nombre real
+  // del producto, no por una versión resumida a 1–2 palabras.
   const buildQueryFromSuggestion = (prod) => {
     const raw = (prod?.nombre || prod?.name || "").toString();
 
-    // Normalizo acentos y símbolos
     const noAccents = raw.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    const cleaned = noAccents
-      .replace(/[^\p{L}\p{N}\s]/gu, " ")   // solo letras/números/espacios
-      .replace(/\s+/g, " ")                // espacios múltiples -> uno
+    return noAccents
+      .replace(/[^\p{L}\p{N}\s]/gu, " ")
+      .replace(/\s+/g, " ")
       .trim();
-
-    // Stopwords y unidades que suelen romper la búsqueda exacta
-    const STOP = new Set([
-      "x","por","de","la","el","los","las","y","en","a","para","con",
-      "solo","unidad","unidades",
-      "kg","g","gr","gramos","ml","l","lt","lts","cc","cm","mm",
-    ]);
-
-    // Tomo 1–2 palabras “fuertes” (sin números, sin stopwords)
-    const tokens = cleaned.split(" ").filter(t => {
-      const tl = t.toLowerCase();
-      return tl.length > 2 && !STOP.has(tl) && !/^\d/.test(tl);
-    });
-
-    // Armo la query compacta, con fallback al cleaned si quedó vacía
-    const compact = tokens.slice(0, 2).join(" ");
-    return compact || cleaned;
   };
 
   // Refs para cerrar sugerencias al click fuera
