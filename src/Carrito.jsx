@@ -228,6 +228,8 @@ useEffect(() => {
   const buildWhatsAppLink = () =>
     telefonoDestino ? `https://wa.me/549${telefonoDestino}?text=${generarMensajeWhatsApp()}` : "";
 
+  const WHATSAPP_ORDER_CLEARED_KEY = "whatsapp_order_cleared";
+
   const onFinalizarClick = () => {
     if (branchesLoaded) {
       if (branches.length > 0) {
@@ -268,6 +270,16 @@ useEffect(() => {
       else fetch(url, { method: "POST", body: JSON.stringify(payload), headers: { "Content-Type": "application/json" } });
     } catch {}
 
+    try {
+      localStorage.setItem(
+        WHATSAPP_ORDER_CLEARED_KEY,
+        JSON.stringify({
+          at: Date.now(),
+          store: subdomain,
+        })
+      );
+    } catch {}
+
     const wa = buildWhatsAppLink();
     if (wa) window.location.href = wa;
     vaciarCarrito();
@@ -282,11 +294,31 @@ useEffect(() => {
     setDeleteItem(null);
   };
 
+  let whatsappOrderCleared = false;
+  try {
+    const raw = localStorage.getItem(WHATSAPP_ORDER_CLEARED_KEY);
+    const parsed = raw ? JSON.parse(raw) : null;
+    whatsappOrderCleared = parsed?.store === subdomain;
+  } catch {}
+
   if (carrito.length === 0) {
     return (
       <div className="container py-4">
         <h4>Detalle de tu pedido</h4>
-        <p className="text-muted">No hay productos en tu pedido.</p>
+        {whatsappOrderCleared ? (
+          <div className="alert alert-success border-0 shadow-sm" role="alert">
+            <h5 className="mb-2">Ya te comunicaste con el vendedor</h5>
+            <p className="mb-2">
+              Tu pedido fue enviado por WhatsApp correctamente y por eso lo eliminamos de esta pantalla,
+              para evitar confusiones o pedidos duplicados.
+            </p>
+            <p className="mb-0">
+              Si querés, podés seguir recorriendo la tienda y agregar nuevos productos para hacer otro pedido.
+            </p>
+          </div>
+        ) : (
+          <p className="text-muted">No hay productos en tu pedido.</p>
+        )}
       </div>
     );
   }
