@@ -299,11 +299,15 @@ useEffect(() => {
     const raw = localStorage.getItem(WHATSAPP_ORDER_CLEARED_KEY);
     const parsed = raw ? JSON.parse(raw) : null;
     whatsappOrderCleared = parsed?.store === subdomain;
-
-    if (whatsappOrderCleared) {
-      localStorage.removeItem(WHATSAPP_ORDER_CLEARED_KEY);
-    }
   } catch {}
+
+  useEffect(() => {
+    if (carrito.length === 0 && whatsappOrderCleared) {
+      try {
+        localStorage.removeItem(WHATSAPP_ORDER_CLEARED_KEY);
+      } catch {}
+    }
+  }, [carrito.length, whatsappOrderCleared]);
 
   if (carrito.length === 0) {
     return (
@@ -311,9 +315,9 @@ useEffect(() => {
         <h4>Detalle de tu pedido</h4>
         {whatsappOrderCleared ? (
           <div className="alert alert-success border-0 shadow-sm" role="alert">
-            <h5 className="mb-2">Ya te comunicaste con el vendedor</h5>
+            <h5 className="mb-2">Tu pedido ha sido enviado por WhatsApp</h5>
             <p className="mb-2">
-              Tu pedido fue enviado por WhatsApp correctamente y por eso lo eliminamos de esta pantalla,
+              Ya te comunicaste con el vendedor, por eso eliminamos este pedido de la pantalla
               para evitar confusiones o pedidos duplicados.
             </p>
             <p className="mb-0">
