@@ -10,6 +10,7 @@ import {
   FaCreditCard,
   FaSitemap,
   FaMapMarkerAlt,
+  FaWhatsapp,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "./assets/variables.css";
@@ -23,14 +24,12 @@ function Layout({ children }) {
   const [estadoSub, setEstadoSub] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Manejo de tamaño de pantalla
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Traer datos de la tienda
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return;
@@ -64,14 +63,12 @@ function Layout({ children }) {
       });
   }, []);
 
-  // Manejo del sidebar mobile
   const handleToggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     window.location.href = "/login";
   };
-
 
   if (loading) {
     return (
@@ -92,7 +89,6 @@ function Layout({ children }) {
 
   return (
     <div className="d-flex">
-      {/* Fondo gris detrás del menú mobile */}
       {isMobile && (
         <div
           className={`sidebar-backdrop ${sidebarOpen ? "active" : ""}`}
@@ -110,7 +106,6 @@ function Layout({ children }) {
         />
       )}
 
-      {/* Sidebar */}
       <div
         className={`sidebar-custom p-3 d-flex flex-column position-fixed top-0 start-0 vh-100 bg-white ${
           sidebarOpen || !isMobile ? "sidebar-visible" : "sidebar-hidden"
@@ -124,14 +119,12 @@ function Layout({ children }) {
           transform: sidebarOpen || !isMobile ? "translateX(0)" : "translateX(-100%)",
         }}
       >
-        {/* Logo */}
         <div className="mb-4 d-flex justify-content-between align-items-center px-2">
           <Link to="/dashboard" className="d-flex align-items-center justify-content-center w-100">
             <img src={isMobile ? "/images/logo_mobile.png" : "/images/logo.png"} alt="de10" width="140" />
           </Link>
         </div>
 
-        {/* Menú */}
         <ul className="nav flex-column text-start">
           <li className="nav-item mb-2">
             <Link to="/dashboard" className="nav-link fw-semibold text-secundario">
@@ -152,12 +145,6 @@ function Layout({ children }) {
               Mis categorías
             </Link>
           </li>
-         {/* <li className="nav-item mb-2">
-            <Link to="/categorias" className="nav-link fw-semibold text-secundario">
-              <FaSitemap className="me-2" />
-              Mis categorías
-            </Link>
-          </li> */}
 
           <li className="nav-item mb-2">
             <Link to="/sucursales" className="nav-link fw-semibold text-secundario">
@@ -165,7 +152,13 @@ function Layout({ children }) {
               Sucursales
             </Link>
           </li>
-          
+
+          <li className="nav-item mb-2">
+            <Link to="/pedidos-whatsapp" className="nav-link fw-semibold text-secundario">
+              <FaWhatsapp className="me-2" />
+              Pedidos WhatsApp
+            </Link>
+          </li>
 
           <li className="nav-item mb-2">
             <Link to="/mi-tienda" className="nav-link fw-semibold text-secundario">
@@ -180,15 +173,8 @@ function Layout({ children }) {
               Suscripción
             </Link>
           </li>
-          {/* <li className="nav-item mb-2">
-            <Link to="/orden/categorias" className="nav-link fw-semibold text-secundario">
-              <FaSitemap className="me-2" />
-              Ordenar categorías
-            </Link>
-          </li>   */}       
         </ul>
 
-        {/* Botón salir */}
         <div className="mt-auto pt-4 border-top">
           <button className="btn btn-secundario secundario text-start w-100 fw-semibold" onClick={handleLogout}>
             <FaSignOutAlt className="me-2" />
@@ -197,9 +183,7 @@ function Layout({ children }) {
         </div>
       </div>
 
-      {/* Contenido principal */}
       <div className="flex-grow-1" style={{ marginLeft: !isMobile ? "220px" : "0", transition: "margin-left 0.3s ease" }}>
-        {/* Topbar */}
         <div className="d-flex justify-content-between align-items-center p-3 border-bottom bg-white shadow-sm flex-wrap">
           <div className="d-flex align-items-center">
             {isMobile && (
@@ -221,7 +205,6 @@ function Layout({ children }) {
           )}
         </div>
 
-        {/* Alerta de suscripción */}
         {estadoSub && (
           <div
             className={`alert ${
@@ -232,7 +215,6 @@ function Layout({ children }) {
           </div>
         )}
 
-        {/* Contenido dinámico */}
         <main className="p-2">{children}</main>
       </div>
     </div>

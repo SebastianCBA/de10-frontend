@@ -21,7 +21,6 @@ function Dashboard() {
         </div>
 
         <div className="row g-4">
-          {/* Mi Tienda */}
           <div className="col-md-4">
             <div className="card h-100 shadow-sm border-0 card-hover">
               <div className="card-body text-center d-flex flex-column justify-content-center">
@@ -38,7 +37,6 @@ function Dashboard() {
             </div>
           </div>
 
-          {/* Productos */}
           <div className="col-md-4">
             <div className="card h-100 shadow-sm border-0 card-hover">
               <div className="card-body text-center d-flex flex-column justify-content-center">
@@ -55,7 +53,6 @@ function Dashboard() {
             </div>
           </div>
 
-          {/* Suscripción */}
           <div className="col-md-4">
             <div className="card h-100 shadow-sm border-0 card-hover">
               <div className="card-body text-center d-flex flex-column justify-content-center">
@@ -67,6 +64,22 @@ function Dashboard() {
                 </p>
                 <Link to="/suscripcion" className="btn mt-3" style={{ backgroundColor: "var(--color-primario)", color: "white" }}>
                   Ver Suscripción
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-md-4">
+            <div className="card h-100 shadow-sm border-0 card-hover">
+              <div className="card-body text-center d-flex flex-column justify-content-center">
+                <h5 className="card-title" style={{ color: "var(--color-primario)", fontWeight: "bold" }}>
+                  Pedidos WhatsApp
+                </h5>
+                <p className="card-text text-muted">
+                  Revisá los pedidos registrados desde tu tienda con filtros por fecha.
+                </p>
+                <Link to="/pedidos-whatsapp" className="btn mt-3" style={{ backgroundColor: "var(--color-primario)", color: "white" }}>
+                  Ver Pedidos
                 </Link>
               </div>
             </div>

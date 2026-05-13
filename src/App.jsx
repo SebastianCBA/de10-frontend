@@ -21,6 +21,7 @@ import MiTienda from "./MiTienda";
 import MisCategorias from "./MisCategorias";
 import MisSucursales from "./MisSucursales"
 import Productos from "./Productos";
+import PedidosWhatsapp from "./PedidosWhatsapp";
 import Carrito from "./Carrito";
 import Feedback from "./Feedback";
 import Home from "./Home";
@@ -188,6 +189,16 @@ function AppRoutes() {
             )
           }
         /> 
+        <Route
+          path="/pedidos-whatsapp"
+          element={
+            token ? (
+              <AnimatedPage><PedidosWhatsapp /></AnimatedPage>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
       <Route
         path="/orden/categorias"
         element={
