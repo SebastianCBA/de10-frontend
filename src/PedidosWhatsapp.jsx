@@ -18,10 +18,29 @@ function formatearFecha(fecha) {
   });
 }
 
+function formatDateInput(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function getDefaultDateRange() {
+  const today = new Date();
+  const from = new Date(today);
+  from.setDate(from.getDate() - 30);
+
+  return {
+    desde: formatDateInput(from),
+    hasta: formatDateInput(today),
+  };
+}
+
 function PedidosWhatsapp() {
+  const defaultRange = getDefaultDateRange();
   const [pedidos, setPedidos] = useState([]);
-  const [desde, setDesde] = useState("");
-  const [hasta, setHasta] = useState("");
+  const [desde, setDesde] = useState(defaultRange.desde);
+  const [hasta, setHasta] = useState(defaultRange.hasta);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [cargando, setCargando] = useState(false);
@@ -128,8 +147,9 @@ function PedidosWhatsapp() {
                 <button
                   className="btn btn-outline-secondary w-100"
                   onClick={() => {
-                    setDesde("");
-                    setHasta("");
+                    const range = getDefaultDateRange();
+                    setDesde(range.desde);
+                    setHasta(range.hasta);
                   }}
                 >
                   Limpiar filtros
