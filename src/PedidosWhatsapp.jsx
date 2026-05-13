@@ -183,7 +183,13 @@ function PedidosWhatsapp() {
 
                     <div className="d-flex align-items-start align-items-lg-center">
                       <button
-                        className="btn btn-outline-primary"
+                        className="btn"
+                        style={{
+                          backgroundColor: "#fff",
+                          color: "var(--color-secundario)",
+                          border: "1px solid #d8dee9",
+                          fontWeight: 600,
+                        }}
                         onClick={() =>
                           setPedidoExpandido((prev) => (prev === pedido.id ? null : pedido.id))
                         }
