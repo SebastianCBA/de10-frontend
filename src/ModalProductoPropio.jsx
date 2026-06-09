@@ -134,6 +134,7 @@ export default function ModalProductoPropio({
   const [loadingChild, setLoadingChild] = useState(false);
   const [parentErr, setParentErr] = useState(null);
   const [childErr, setChildErr] = useState(null);
+  const [categoryTree, setCategoryTree] = useState([]);
 
   const parentAbortRef = useRef(null);
   const childAbortRef = useRef(null);
@@ -142,6 +143,12 @@ export default function ModalProductoPropio({
 
   const MIN_CHARS = 2;
   const isEdit = Boolean(editProductId);
+  const normalizeText = (value = "") =>
+    value
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .trim();
 
   // === Helpers para mostrar errores de validación (Laravel) ===
   const extractValidationMessage = (err) => {
@@ -171,7 +178,56 @@ export default function ModalProductoPropio({
   const allowNewPrimary = !isEdit || (isEdit && exThumbs.length === 0);
 
   // ========= Helpers autosuggest =========
+  const filterOptionsByQuery = (items, q) => {
+    const needle = normalizeText(q);
+    if (!needle) return [];
+
+    return [...items]
+      .filter((opt) => normalizeText(opt?.name || "").includes(needle))
+      .sort((a, b) => {
+        const aName = normalizeText(a?.name || "");
+        const bName = normalizeText(b?.name || "");
+        const aExact = aName === needle ? 0 : 1;
+        const bExact = bName === needle ? 0 : 1;
+
+        if (aExact !== bExact) return aExact - bExact;
+        return aName.localeCompare(bName, "es", { sensitivity: "base" });
+      })
+      .slice(0, 20);
+  };
+
+  const loadCategoryTree = async () => {
+    try {
+      const res = await axios.get(`${config.apiBaseUrl}/my-categories-all`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      const roots = Array.isArray(res.data)
+        ? res.data.filter((root) => !root?.is_global)
+        : [];
+      setCategoryTree(roots);
+      return roots;
+    } catch {
+      setCategoryTree([]);
+      return [];
+    }
+  };
+
   const fetchParents = async (q) => {
+    if (categoryTree.length > 0) {
+      setLoadingParent(true);
+      setParentErr(null);
+      try {
+        setParentOptions(filterOptionsByQuery(categoryTree, q));
+      } finally {
+        setLoadingParent(false);
+      }
+      return;
+    }
+
     if (parentAbortRef.current) parentAbortRef.current.abort();
     parentAbortRef.current = new AbortController();
     setLoadingParent(true);
@@ -204,6 +260,20 @@ export default function ModalProductoPropio({
 
   const fetchChildren = async (parentId, q) => {
     if (!parentId) return;
+
+    if (categoryTree.length > 0) {
+      setLoadingChild(true);
+      setChildErr(null);
+      try {
+        const parent = categoryTree.find((opt) => Number(opt.id) === Number(parentId));
+        const localChildren = Array.isArray(parent?.subcategorias) ? parent.subcategorias : [];
+        setChildOptions(filterOptionsByQuery(localChildren, q));
+      } finally {
+        setLoadingChild(false);
+      }
+      return;
+    }
+
     if (childAbortRef.current) childAbortRef.current.abort();
     childAbortRef.current = new AbortController();
     setLoadingChild(true);
@@ -319,7 +389,15 @@ export default function ModalProductoPropio({
       setLoadingImages(false);
       setImgError("");
       setOptimizing(false);
+      setParentErr(null);
+      setChildErr(null);
+      setCategoryTree([]);
     }
+  }, [show]);
+
+  useEffect(() => {
+    if (!show) return;
+    loadCategoryTree();
   }, [show]);
 
   // ========= Modo edición: traer datos + imágenes =========
@@ -646,6 +724,13 @@ export default function ModalProductoPropio({
 
   if (!show) return null;
 
+  const hasExactParentMatch = parentOptions.some(
+    (opt) => normalizeText(opt?.name) === normalizeText(parentQuery)
+  );
+  const hasExactChildMatch = childOptions.some(
+    (opt) => normalizeText(opt?.name) === normalizeText(childQuery)
+  );
+
   return (
     <div className="modal d-block bg-dark bg-opacity-50" tabIndex="-1">
       <div className="modal-dialog modal-lg" style={{ marginTop: "5vh", marginBottom: "5vh", maxHeight: "90vh" }}>
@@ -721,7 +806,7 @@ export default function ModalProductoPropio({
                                 {opt.name}
                               </div>
                             ))}
-                          {!loadingParent && !parentErr && parentOptions.length === 0 && parentQuery.trim() !== "" && (
+                          {!loadingParent && !parentErr && parentQuery.trim() !== "" && !hasExactParentMatch && (
                             <div
                               className="autosuggest-row fw-semibold"
                               onMouseDown={() => selectParent({ id: null, name: parentQuery.trim(), isNew: true })}
@@ -789,7 +874,7 @@ export default function ModalProductoPropio({
                                 {opt.name}
                               </div>
                             ))}
-                          {!loadingChild && !childErr && childOptions.length === 0 && childQuery.trim() !== "" && (
+                          {!loadingChild && !childErr && childQuery.trim() !== "" && !hasExactChildMatch && (
                             <div
                               className="autosuggest-row fw-semibold"
                               onMouseDown={() => selectChild({ id: null, name: childQuery.trim(), isNew: true })}
