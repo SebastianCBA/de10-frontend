@@ -43,6 +43,7 @@ function MiTienda() {
   const [loading, setLoading] = useState(true);   // carga inicial
   const [saving, setSaving] = useState(false);    // guardando/enviando
   const [mensaje, setMensaje] = useState("");
+  const [mensajeTipo, setMensajeTipo] = useState("success");
 
   useEffect(() => {
     axios
@@ -82,6 +83,7 @@ function MiTienda() {
         if (res.data.logo) setLogoPreview(res.data.logo);
       })
       .catch(() => {
+        setMensajeTipo("error");
         setMensaje("Error al obtener los datos de tu tienda");
       })
       .finally(() => setLoading(false));
@@ -107,7 +109,9 @@ function MiTienda() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
     setSaving(true);
+    setMensaje("");
 
     const data = new FormData();
     Object.entries(form).forEach(([key, value]) => {
@@ -127,10 +131,12 @@ function MiTienda() {
         },
       })
       .then(() => {
+        setMensajeTipo("success");
         setMensaje("Tienda actualizada correctamente");
         setTimeout(() => setMensaje(""), 3000);
       })
       .catch((error) => {
+        setMensajeTipo("error");
         if (error.response && error.response.data) {
           if (error.response.data.errors) {
             const errores = Object.values(error.response.data.errors).flat().join(" ");
@@ -174,10 +180,15 @@ function MiTienda() {
         {mensaje && (
           <div
             className={`alert ${
-              mensaje.includes("correctamente") ? "alert-success" : "alert-danger"
-            }`}
+              mensajeTipo === "success" ? "alert-success" : "alert-danger"
+            } position-fixed top-0 start-50 translate-middle-x mt-3 shadow`}
             role="alert"
             aria-live="polite"
+            style={{
+              zIndex: 9999,
+              minWidth: "320px",
+              maxWidth: "min(92vw, 640px)",
+            }}
           >
             {mensaje}
           </div>
