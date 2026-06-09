@@ -111,7 +111,8 @@ function MiTienda() {
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: "smooth" });
     setSaving(true);
-    setMensaje("");
+    setMensajeTipo("info");
+    setMensaje("Guardando cambios...");
 
     const data = new FormData();
     Object.entries(form).forEach(([key, value]) => {
@@ -180,7 +181,11 @@ function MiTienda() {
         {mensaje && (
           <div
             className={`alert ${
-              mensajeTipo === "success" ? "alert-success" : "alert-danger"
+              mensajeTipo === "success"
+                ? "alert-success"
+                : mensajeTipo === "info"
+                ? "alert-info"
+                : "alert-danger"
             } position-fixed top-0 start-50 translate-middle-x mt-3 shadow`}
             role="alert"
             aria-live="polite"
@@ -190,7 +195,16 @@ function MiTienda() {
               maxWidth: "min(92vw, 640px)",
             }}
           >
-            {mensaje}
+            <div className="d-flex align-items-center gap-2">
+              {saving && mensajeTipo === "info" && (
+                <span
+                  className="spinner-border spinner-border-sm flex-shrink-0"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+              )}
+              <span>{mensaje}</span>
+            </div>
           </div>
         )}
 
