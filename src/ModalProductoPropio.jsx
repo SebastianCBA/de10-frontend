@@ -135,7 +135,6 @@ export default function ModalProductoPropio({
   const [parentErr, setParentErr] = useState(null);
   const [childErr, setChildErr] = useState(null);
   const [categoryTree, setCategoryTree] = useState([]);
-  const [creatingCategory, setCreatingCategory] = useState(null);
 
   const parentAbortRef = useRef(null);
   const childAbortRef = useRef(null);
@@ -315,85 +314,8 @@ export default function ModalProductoPropio({
     }
   };
 
-  const upsertRootInTree = (category) => {
-    setCategoryTree((current) => {
-      const next = [...current];
-      const idx = next.findIndex((item) => Number(item.id) === Number(category.id));
-      const entry = {
-        id: category.id,
-        name: category.name,
-        is_global: false,
-        subcategorias: Array.isArray(next[idx]?.subcategorias) ? next[idx].subcategorias : [],
-      };
-
-      if (idx >= 0) next[idx] = entry;
-      else next.push(entry);
-
-      next.sort((a, b) => (a?.name || "").localeCompare(b?.name || "", "es", { sensitivity: "base" }));
-      return next;
-    });
-  };
-
-  const upsertChildInTree = (parentId, category) => {
-    setCategoryTree((current) =>
-      current.map((item) => {
-        if (Number(item.id) !== Number(parentId)) return item;
-
-        const children = Array.isArray(item.subcategorias) ? [...item.subcategorias] : [];
-        const idx = children.findIndex((child) => Number(child.id) === Number(category.id));
-        const entry = {
-          id: category.id,
-          name: category.name,
-          fatherId: parentId,
-        };
-
-        if (idx >= 0) children[idx] = entry;
-        else children.push(entry);
-
-        children.sort((a, b) => (a?.name || "").localeCompare(b?.name || "", "es", { sensitivity: "base" }));
-
-        return {
-          ...item,
-          subcategorias: children,
-        };
-      })
-    );
-  };
-
-  const createOwnCategory = async ({ name, fatherId = null }) => {
-    const { data } = await axios.post(
-      `${config.apiBaseUrl}/my-categories`,
-      { name, fatherId },
-      { headers: authHeaders() }
-    );
-
-    return {
-      id: data?.id,
-      name: data?.name || name,
-      fatherId: data?.fatherId ?? fatherId,
-    };
-  };
-
-  const selectParent = async (opt) => {
-    setServerError("");
-    setParentErr(null);
-
-    if (!opt?.id) {
-      setCreatingCategory("parent");
-      try {
-        const created = await createOwnCategory({ name: opt.name });
-        upsertRootInTree(created);
-        setParentSel({ id: created.id, name: created.name, isNew: false });
-      } catch (err) {
-        setParentErr(extractValidationMessage(err));
-        return;
-      } finally {
-        setCreatingCategory(null);
-      }
-    } else {
-      setParentSel({ id: opt.id, name: opt.name, isNew: false });
-    }
-
+  const selectParent = (opt) => {
+    setParentSel({ id: opt.id ?? null, name: opt.name, isNew: !opt.id });
     setParentQuery("");
     setParentOptions([]);
     setChildSel(null);
@@ -402,31 +324,8 @@ export default function ModalProductoPropio({
     setMetaDirty(true);
   };
 
-  const selectChild = async (opt) => {
-    setServerError("");
-    setChildErr(null);
-
-    if (!opt?.id) {
-      if (!parentSel?.id) {
-        setChildErr("Elegí una categoría válida primero.");
-        return;
-      }
-
-      setCreatingCategory("child");
-      try {
-        const created = await createOwnCategory({ name: opt.name, fatherId: parentSel.id });
-        upsertChildInTree(parentSel.id, created);
-        setChildSel({ id: created.id, name: created.name, isNew: false });
-      } catch (err) {
-        setChildErr(extractValidationMessage(err));
-        return;
-      } finally {
-        setCreatingCategory(null);
-      }
-    } else {
-      setChildSel({ id: opt.id, name: opt.name, isNew: false });
-    }
-
+  const selectChild = (opt) => {
+    setChildSel({ id: opt.id ?? null, name: opt.name, isNew: !opt.id });
     setChildQuery("");
     setChildOptions([]);
     setMetaDirty(true);
@@ -462,18 +361,18 @@ export default function ModalProductoPropio({
   const onParentKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      if (parentOptions.length > 0) void selectParent(parentOptions[0]);
+      if (parentOptions.length > 0) selectParent(parentOptions[0]);
       else if (parentQuery.trim() !== "")
-        void selectParent({ id: null, name: parentQuery.trim(), isNew: true });
+        selectParent({ id: null, name: parentQuery.trim(), isNew: true });
     }
   };
 
   const onChildKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      if (childOptions.length > 0) void selectChild(childOptions[0]);
+      if (childOptions.length > 0) selectChild(childOptions[0]);
       else if (childQuery.trim() !== "")
-        void selectChild({ id: null, name: childQuery.trim(), isNew: true });
+        selectChild({ id: null, name: childQuery.trim(), isNew: true });
     }
   };
 
@@ -505,7 +404,6 @@ export default function ModalProductoPropio({
       setParentErr(null);
       setChildErr(null);
       setCategoryTree([]);
-      setCreatingCategory(null);
     }
   }, [show]);
 
@@ -889,7 +787,6 @@ export default function ModalProductoPropio({
                         onKeyDown={onParentKeyDown}
                         placeholder="Ej: Almacén"
                         autoComplete="off"
-                        disabled={creatingCategory === "parent"}
                         aria-autocomplete="list"
                         aria-expanded={Boolean(loadingParent || parentOptions.length)}
                       />
@@ -912,14 +809,14 @@ export default function ModalProductoPropio({
                           {!loadingParent &&
                             !parentErr &&
                             parentOptions.map((opt, idx) => (
-                              <div key={opt.id ?? `new-${idx}`} className="autosuggest-row" onMouseDown={() => void selectParent(opt)}>
+                              <div key={opt.id ?? `new-${idx}`} className="autosuggest-row" onMouseDown={() => selectParent(opt)}>
                                 {opt.name}
                               </div>
                             ))}
                           {!loadingParent && !parentErr && parentQuery.trim() !== "" && !hasExactParentMatch && (
                             <div
                               className="autosuggest-row fw-semibold"
-                              onMouseDown={() => void selectParent({ id: null, name: parentQuery.trim(), isNew: true })}
+                              onMouseDown={() => selectParent({ id: null, name: parentQuery.trim(), isNew: true })}
                             >
                               Crear “{parentQuery.trim()}”
                             </div>
@@ -958,7 +855,7 @@ export default function ModalProductoPropio({
                         onKeyDown={onChildKeyDown}
                         placeholder="Ej: Harinas"
                         autoComplete="off"
-                        disabled={!parentSel || creatingCategory === "child"}
+                        disabled={!parentSel}
                         aria-autocomplete="list"
                         aria-expanded={Boolean(loadingChild || childOptions.length)}
                       />
@@ -980,14 +877,14 @@ export default function ModalProductoPropio({
                           {!loadingChild &&
                             !childErr &&
                             childOptions.map((opt, idx) => (
-                              <div key={opt.id ?? `cnew-${idx}`} className="autosuggest-row" onMouseDown={() => void selectChild(opt)}>
+                              <div key={opt.id ?? `cnew-${idx}`} className="autosuggest-row" onMouseDown={() => selectChild(opt)}>
                                 {opt.name}
                               </div>
                             ))}
                           {!loadingChild && !childErr && childQuery.trim() !== "" && !hasExactChildMatch && (
                             <div
                               className="autosuggest-row fw-semibold"
-                              onMouseDown={() => void selectChild({ id: null, name: childQuery.trim(), isNew: true })}
+                              onMouseDown={() => selectChild({ id: null, name: childQuery.trim(), isNew: true })}
                             >
                               Crear “{childQuery.trim()}”
                             </div>
