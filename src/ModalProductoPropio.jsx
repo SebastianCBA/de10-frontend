@@ -150,6 +150,11 @@ export default function ModalProductoPropio({
       .toLowerCase()
       .trim();
 
+  const authHeaders = () => ({
+    Accept: "application/json",
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  });
+
   // === Helpers para mostrar errores de validación (Laravel) ===
   const extractValidationMessage = (err) => {
     const d = err?.response?.data;
@@ -196,32 +201,43 @@ export default function ModalProductoPropio({
       .slice(0, 20);
   };
 
+  const parseOwnCategoryRoots = (payload) => {
+    const roots = Array.isArray(payload)
+      ? payload
+      : Array.isArray(payload?.data)
+        ? payload.data
+        : [];
+
+    return roots.filter((root) => !root?.is_global);
+  };
+
   const loadCategoryTree = async () => {
     try {
       const res = await axios.get(`${config.apiBaseUrl}/my-categories-all`, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+        headers: authHeaders(),
       });
 
-      const roots = Array.isArray(res.data)
-        ? res.data.filter((root) => !root?.is_global)
-        : [];
+      const roots = parseOwnCategoryRoots(res.data);
       setCategoryTree(roots);
       return roots;
-    } catch {
+    } catch (err) {
+      console.error("loadCategoryTree", err?.response?.status, err?.response?.data || err?.message);
       setCategoryTree([]);
       return [];
     }
   };
 
   const fetchParents = async (q) => {
-    if (categoryTree.length > 0) {
+    let roots = categoryTree;
+    if (roots.length === 0) {
+      roots = await loadCategoryTree();
+    }
+
+    if (roots.length > 0) {
       setLoadingParent(true);
       setParentErr(null);
       try {
-        setParentOptions(filterOptionsByQuery(categoryTree, q));
+        setParentOptions(filterOptionsByQuery(roots, q));
       } finally {
         setLoadingParent(false);
       }
@@ -236,10 +252,7 @@ export default function ModalProductoPropio({
       const res = await axios.get(`${config.apiBaseUrl}/my-categories`, {
         params: { level: "parent", q },
         signal: parentAbortRef.current.signal,
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+        headers: authHeaders(),
       });
 
       const soloPropias = (res.data || []).filter((opt) => Number(opt?.pantry_id || 0) > 0);
@@ -282,10 +295,7 @@ export default function ModalProductoPropio({
       const res = await axios.get(`${config.apiBaseUrl}/my-categories`, {
         params: { parent_id: parentId, q },
         signal: childAbortRef.current.signal,
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+        headers: authHeaders(),
       });
 
       const soloPropias = (res.data || []).filter((opt) => Number(opt?.pantry_id || 0) > 0);
