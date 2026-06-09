@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "./Layout";
 import axios from "axios";
 import config from "./config";
@@ -6,18 +6,13 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 
 function MiTienda() {
-  const AUTO_CLEAR_DEFAULTS = {
-    name: ["Mi Despensa"],
-    address: ["Dirección por defecto"],
-    phone: ["000-000000"],
-    welcome_title: [
-      "¡Bienvenido a nuestra tienda online!",
-      "Comprá fácil y rápido por WhatsApp",
-    ],
-    welcome_subtitle: [
-      "Descubrí cientos de productos al mejor precio. Hacé tu pedido y nos comunicaremos contigo por WhatsApp lo antes posible, sin complicaciones.",
+  const DEFAULT_FIELD_VALUES = {
+    name: "Mi Comercio",
+    address: "Dirección por defecto",
+    phone: "000-000000",
+    welcome_title: "Comprá fácil y rápido por WhatsApp",
+    welcome_subtitle:
       "Elegí tus productos, enviá el pedido y coordinamos la entrega directamente por WhatsApp. Sin vueltas, simple y rápido.",
-    ],
   };
 
   const { token } = useAuth();
@@ -37,11 +32,11 @@ function MiTienda() {
 
   const [logoPreview, setLogoPreview] = useState(null);
   const [logoFile, setLogoFile] = useState(null);
+  const [defaultPlaceholderFields, setDefaultPlaceholderFields] = useState(new Set());
 
   const [loading, setLoading] = useState(true);   // carga inicial
   const [saving, setSaving] = useState(false);    // guardando/enviando
   const [mensaje, setMensaje] = useState("");
-  const autoClearedFieldsRef = useRef(new Set());
 
   useEffect(() => {
     axios
@@ -49,18 +44,27 @@ function MiTienda() {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        setForm({
+        const loadedForm = {
           name: res.data.name || "",
           address: res.data.address || "",
           phone: res.data.phone || "",
           email: res.data.email || "",
-
-          // 👇 traemos lo nuevo (con fallback vacío)
           welcome_title: res.data.welcome_title || "",
           welcome_subtitle: res.data.welcome_subtitle || "",
           instagram_url: res.data.instagram_url || "",
           facebook_url: res.data.facebook_url || "",
+        };
+
+        const placeholderFields = new Set();
+        Object.entries(DEFAULT_FIELD_VALUES).forEach(([field, defaultValue]) => {
+          if (loadedForm[field] === defaultValue) {
+            loadedForm[field] = "";
+            placeholderFields.add(field);
+          }
         });
+
+        setForm(loadedForm);
+        setDefaultPlaceholderFields(placeholderFields);
         if (res.data.logo) setLogoPreview(res.data.logo);
       })
       .catch(() => {
@@ -77,22 +81,14 @@ function MiTienda() {
       setLogoFile(file || null);
       if (file) setLogoPreview(URL.createObjectURL(file));
     } else {
+      setDefaultPlaceholderFields((prev) => {
+        if (!prev.has(name)) return prev;
+        const next = new Set(prev);
+        next.delete(name);
+        return next;
+      });
       setForm((prev) => ({ ...prev, [name]: value }));
     }
-  };
-
-  const handleAutoClear = (e) => {
-    const { name } = e.target;
-    const defaults = AUTO_CLEAR_DEFAULTS[name];
-
-    if (!defaults || autoClearedFieldsRef.current.has(name)) return;
-
-    setForm((prev) => {
-      if (!defaults.includes(prev[name])) return prev;
-
-      autoClearedFieldsRef.current.add(name);
-      return { ...prev, [name]: "" };
-    });
   };
 
   const handleSubmit = (e) => {
@@ -100,7 +96,13 @@ function MiTienda() {
     setSaving(true);
 
     const data = new FormData();
-    Object.entries(form).forEach(([key, value]) => data.append(key, value));
+    Object.entries(form).forEach(([key, value]) => {
+      const resolvedValue =
+        defaultPlaceholderFields.has(key) && value === ""
+          ? DEFAULT_FIELD_VALUES[key]
+          : value;
+      data.append(key, resolvedValue);
+    });
     if (logoFile) data.append("logo", logoFile);
 
     axios
@@ -187,8 +189,8 @@ function MiTienda() {
                     type={type}
                     className="form-control"
                     value={form[name]}
+                    placeholder={defaultPlaceholderFields.has(name) ? DEFAULT_FIELD_VALUES[name] : ""}
                     onChange={handleChange}
-                    onFocus={readOnly ? undefined : handleAutoClear}
                     readOnly={readOnly}
                   />
                 </div>
@@ -208,10 +210,13 @@ function MiTienda() {
                   name="welcome_title"
                   type="text"
                   className="form-control"
-                  placeholder="¡Bienvenido a nuestra tienda online!"
+                  placeholder={
+                    defaultPlaceholderFields.has("welcome_title")
+                      ? DEFAULT_FIELD_VALUES.welcome_title
+                      : ""
+                  }
                   value={form.welcome_title}
                   onChange={handleChange}
-                  onFocus={handleAutoClear}
                   maxLength={120}
                 />
                 <small className="text-muted">Máx. 120 caracteres.</small>
@@ -227,10 +232,13 @@ function MiTienda() {
                   name="welcome_subtitle"
                   className="form-control"
                   rows={3}
-                  placeholder="Descubrí cientos de productos al mejor precio..."
+                  placeholder={
+                    defaultPlaceholderFields.has("welcome_subtitle")
+                      ? DEFAULT_FIELD_VALUES.welcome_subtitle
+                      : ""
+                  }
                   value={form.welcome_subtitle}
                   onChange={handleChange}
-                  onFocus={handleAutoClear}
                   maxLength={600}
                 />
                 <small className="text-muted">
@@ -253,7 +261,6 @@ function MiTienda() {
                   placeholder="https://www.instagram.com/tu_cuenta"
                   value={form.instagram_url}
                   onChange={handleChange}
-                  onFocus={handleAutoClear}
                 />
                 <small className="text-muted">
                   Ej: https://instagram.com/tuusuario
@@ -271,7 +278,6 @@ function MiTienda() {
                   placeholder="https://www.facebook.com/tu_pagina"
                   value={form.facebook_url}
                   onChange={handleChange}
-                  onFocus={handleAutoClear}
                 />
                 <small className="text-muted">
                   Pegá la URL completa de tu FanPage.
