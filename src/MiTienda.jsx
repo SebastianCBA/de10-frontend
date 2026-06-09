@@ -6,13 +6,18 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 
 function MiTienda() {
-  const DEFAULT_FIELD_VALUES = {
-    name: "Mi Comercio",
-    address: "Dirección por defecto",
-    phone: "000-000000",
-    welcome_title: "Comprá fácil y rápido por WhatsApp",
-    welcome_subtitle:
+  const DEFAULT_FIELD_CANDIDATES = {
+    name: ["Mi Comercio"],
+    address: ["Dirección por defecto"],
+    phone: ["000-000000"],
+    welcome_title: [
+      "Comprá fácil y rápido por WhatsApp",
+      "¡Bienvenido a nuestra tienda online!",
+    ],
+    welcome_subtitle: [
       "Elegí tus productos, enviá el pedido y coordinamos la entrega directamente por WhatsApp. Sin vueltas, simple y rápido.",
+      "Descubrí cientos de productos al mejor precio. Hacé tu pedido y nos comunicaremos contigo por WhatsApp lo antes posible, sin complicaciones.",
+    ],
   };
 
   const { token } = useAuth();
@@ -33,6 +38,7 @@ function MiTienda() {
   const [logoPreview, setLogoPreview] = useState(null);
   const [logoFile, setLogoFile] = useState(null);
   const [defaultPlaceholderFields, setDefaultPlaceholderFields] = useState(new Set());
+  const [defaultPlaceholderValues, setDefaultPlaceholderValues] = useState({});
 
   const [loading, setLoading] = useState(true);   // carga inicial
   const [saving, setSaving] = useState(false);    // guardando/enviando
@@ -56,15 +62,23 @@ function MiTienda() {
         };
 
         const placeholderFields = new Set();
-        Object.entries(DEFAULT_FIELD_VALUES).forEach(([field, defaultValue]) => {
-          if (loadedForm[field] === defaultValue) {
+        const placeholderValues = {};
+
+        Object.entries(DEFAULT_FIELD_CANDIDATES).forEach(([field, defaultValues]) => {
+          const matchedDefault = defaultValues.find(
+            (defaultValue) => loadedForm[field] === defaultValue
+          );
+
+          if (matchedDefault) {
             loadedForm[field] = "";
             placeholderFields.add(field);
+            placeholderValues[field] = matchedDefault;
           }
         });
 
         setForm(loadedForm);
         setDefaultPlaceholderFields(placeholderFields);
+        setDefaultPlaceholderValues(placeholderValues);
         if (res.data.logo) setLogoPreview(res.data.logo);
       })
       .catch(() => {
@@ -99,7 +113,7 @@ function MiTienda() {
     Object.entries(form).forEach(([key, value]) => {
       const resolvedValue =
         defaultPlaceholderFields.has(key) && value === ""
-          ? DEFAULT_FIELD_VALUES[key]
+          ? defaultPlaceholderValues[key] || DEFAULT_FIELD_CANDIDATES[key]?.[0] || ""
           : value;
       data.append(key, resolvedValue);
     });
@@ -189,7 +203,11 @@ function MiTienda() {
                     type={type}
                     className="form-control"
                     value={form[name]}
-                    placeholder={defaultPlaceholderFields.has(name) ? DEFAULT_FIELD_VALUES[name] : ""}
+                    placeholder={
+                      defaultPlaceholderFields.has(name)
+                        ? defaultPlaceholderValues[name] || ""
+                        : ""
+                    }
                     onChange={handleChange}
                     readOnly={readOnly}
                   />
@@ -212,7 +230,7 @@ function MiTienda() {
                   className="form-control"
                   placeholder={
                     defaultPlaceholderFields.has("welcome_title")
-                      ? DEFAULT_FIELD_VALUES.welcome_title
+                      ? defaultPlaceholderValues.welcome_title || ""
                       : ""
                   }
                   value={form.welcome_title}
@@ -234,7 +252,7 @@ function MiTienda() {
                   rows={3}
                   placeholder={
                     defaultPlaceholderFields.has("welcome_subtitle")
-                      ? DEFAULT_FIELD_VALUES.welcome_subtitle
+                      ? defaultPlaceholderValues.welcome_subtitle || ""
                       : ""
                   }
                   value={form.welcome_subtitle}
