@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Layout from "./Layout";
 import axios from "axios";
 import config from "./config";
@@ -6,6 +6,20 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 
 function MiTienda() {
+  const AUTO_CLEAR_DEFAULTS = {
+    name: ["Mi Despensa"],
+    address: ["Dirección por defecto"],
+    phone: ["000-000000"],
+    welcome_title: [
+      "¡Bienvenido a nuestra tienda online!",
+      "Comprá fácil y rápido por WhatsApp",
+    ],
+    welcome_subtitle: [
+      "Descubrí cientos de productos al mejor precio. Hacé tu pedido y nos comunicaremos contigo por WhatsApp lo antes posible, sin complicaciones.",
+      "Elegí tus productos, enviá el pedido y coordinamos la entrega directamente por WhatsApp. Sin vueltas, simple y rápido.",
+    ],
+  };
+
   const { token } = useAuth();
 
   const [form, setForm] = useState({
@@ -27,6 +41,7 @@ function MiTienda() {
   const [loading, setLoading] = useState(true);   // carga inicial
   const [saving, setSaving] = useState(false);    // guardando/enviando
   const [mensaje, setMensaje] = useState("");
+  const autoClearedFieldsRef = useRef(new Set());
 
   useEffect(() => {
     axios
@@ -64,6 +79,20 @@ function MiTienda() {
     } else {
       setForm((prev) => ({ ...prev, [name]: value }));
     }
+  };
+
+  const handleAutoClear = (e) => {
+    const { name } = e.target;
+    const defaults = AUTO_CLEAR_DEFAULTS[name];
+
+    if (!defaults || autoClearedFieldsRef.current.has(name)) return;
+
+    setForm((prev) => {
+      if (!defaults.includes(prev[name])) return prev;
+
+      autoClearedFieldsRef.current.add(name);
+      return { ...prev, [name]: "" };
+    });
   };
 
   const handleSubmit = (e) => {
@@ -159,6 +188,7 @@ function MiTienda() {
                     className="form-control"
                     value={form[name]}
                     onChange={handleChange}
+                    onFocus={readOnly ? undefined : handleAutoClear}
                     readOnly={readOnly}
                   />
                 </div>
@@ -181,6 +211,7 @@ function MiTienda() {
                   placeholder="¡Bienvenido a nuestra tienda online!"
                   value={form.welcome_title}
                   onChange={handleChange}
+                  onFocus={handleAutoClear}
                   maxLength={120}
                 />
                 <small className="text-muted">Máx. 120 caracteres.</small>
@@ -199,6 +230,7 @@ function MiTienda() {
                   placeholder="Descubrí cientos de productos al mejor precio..."
                   value={form.welcome_subtitle}
                   onChange={handleChange}
+                  onFocus={handleAutoClear}
                   maxLength={600}
                 />
                 <small className="text-muted">
@@ -221,6 +253,7 @@ function MiTienda() {
                   placeholder="https://www.instagram.com/tu_cuenta"
                   value={form.instagram_url}
                   onChange={handleChange}
+                  onFocus={handleAutoClear}
                 />
                 <small className="text-muted">
                   Ej: https://instagram.com/tuusuario
@@ -238,6 +271,7 @@ function MiTienda() {
                   placeholder="https://www.facebook.com/tu_pagina"
                   value={form.facebook_url}
                   onChange={handleChange}
+                  onFocus={handleAutoClear}
                 />
                 <small className="text-muted">
                   Pegá la URL completa de tu FanPage.
