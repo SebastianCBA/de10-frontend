@@ -765,12 +765,18 @@ function TiendaLayout() {
               {/* Categorías */}
               {categorias.map((cat) => (
                 <div key={cat.id} className="mb-3">
-                  <div className="d-flex align-items-center" onClick={() => toggleAcordeon(cat.id)}>
-                    {cat.nombre}
+                  <button
+                    type="button"
+                    className="categoria-acordeon-trigger d-flex align-items-center w-100"
+                    onClick={() => toggleAcordeon(cat.id)}
+                    aria-expanded={Boolean(acordeonAbierto[cat.id])}
+                    aria-label={`${acordeonAbierto[cat.id] ? "Ocultar" : "Mostrar"} subcategorías de ${cat.nombre}`}
+                  >
+                    <span>{cat.nombre}</span>
                     <span className="collapse-icon ms-auto">
                       {acordeonAbierto[cat.id] ? <FaChevronUp /> : <FaChevronDown />}
                     </span>
-                  </div>
+                  </button>
                   <Collapse in={acordeonAbierto[cat.id]}>
                     <div className="mt-2">
                       {(cat.subcategorias || []).map((sub) => (

@@ -902,10 +902,39 @@ a[href="/"] svg.text-primary {
   text-decoration: none;
   transition: all 0.2s ease-in-out;
 }
+.categoria-acordeon-trigger {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.categoria-acordeon-trigger:hover {
+  color: var(--color-naranja);
+}
+
+.categoria-acordeon-trigger:focus-visible {
+  outline: 2px solid var(--color-naranja);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.categoria-acordeon-trigger .collapse-icon {
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.categoria-acordeon-trigger:hover .collapse-icon {
+  color: var(--color-naranja);
+}
+
 .hover-subcategoria {
   color: var(--color-secundario);
   padding: 4px 8px;
   border-radius: 4px;
+  cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
