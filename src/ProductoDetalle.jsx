@@ -48,7 +48,7 @@ function ProductoDetalle() {
           (Array.isArray(p?.variants) && p.variants) ||
           [];
 
-        setVarianteSeleccionada(vars.length ? vars[0] : null);
+        setVarianteSeleccionada(null);
         setImagenActiva(0);
       })
       .catch((err) => {
