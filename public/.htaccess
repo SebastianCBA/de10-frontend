@@ -9,19 +9,19 @@
   RewriteRule ^(.*)$ https://de10.app/$1 [R=301,L]
 
   # 1) SUBDOMINIOS: bots sociales -> share de producto
-  RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit|WhatsApp|Twitterbot|LinkedInBot|Pinterest|Slackbot|Discordbot) [NC]
+  RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit|Facebot|meta-externalagent|meta-externalfetcher|WhatsApp|Twitterbot|LinkedInBot|Pinterest|Slackbot|Discordbot) [NC]
   RewriteCond %{HTTP_HOST} ^([^.]+)\.de10\.app$ [NC]
   RewriteCond %{HTTP_HOST} !^(www|de10)\.de10\.app$ [NC]
   RewriteRule ^producto/([0-9]+)(?:/([^/]+))?$ https://de10.app/backend/tienda/%1/producto/$1/$2/_share?url=https://%1.de10.app%{REQUEST_URI} [R=302,L,QSA]
 
   # 2) SUBDOMINIOS: bots sociales -> share de categoría
-  RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit|WhatsApp|Twitterbot|LinkedInBot|Pinterest|Slackbot|Discordbot) [NC]
+  RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit|Facebot|meta-externalagent|meta-externalfetcher|WhatsApp|Twitterbot|LinkedInBot|Pinterest|Slackbot|Discordbot) [NC]
   RewriteCond %{HTTP_HOST} ^([^.]+)\.de10\.app$ [NC]
   RewriteCond %{HTTP_HOST} !^(www|de10)\.de10\.app$ [NC]
   RewriteRule ^categoria/([0-9]+)(?:/([^/]+))?$ https://de10.app/backend/tienda/%1/categoria/$1/$2/_share?url=https://%1.de10.app%{REQUEST_URI} [R=302,L,QSA]
 
   # 3) SUBDOMINIOS: bots sociales -> share de home / resto de páginas
-  RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit|WhatsApp|Twitterbot|LinkedInBot|Pinterest|Slackbot|Discordbot) [NC]
+  RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit|Facebot|meta-externalagent|meta-externalfetcher|WhatsApp|Twitterbot|LinkedInBot|Pinterest|Slackbot|Discordbot) [NC]
   RewriteCond %{HTTP_HOST} ^([^.]+)\.de10\.app$ [NC]
   RewriteCond %{HTTP_HOST} !^(www|de10)\.de10\.app$ [NC]
   RewriteRule ^.*$ https://de10.app/backend/tienda/%1/_share?url=https://%1.de10.app%{REQUEST_URI} [R=302,L,QSA]
