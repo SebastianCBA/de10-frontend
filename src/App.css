@@ -92,6 +92,14 @@
 .dashboard-button:hover {
   background-color: #d63a20; /* un poco más oscuro en hover */
 }
+
+.dashboard-card {
+  min-height: 220px;
+}
+
+.dashboard-card-button {
+  width: 100%;
+}
 .text-acento {
   color: var(--color-acento);
   font-weight: 500;
